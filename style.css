@@ -1,0 +1,300 @@
+/* Importar Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@400;700&display=swap');
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Variables de tema */
+:root {
+  --primary: #ff69b4;
+  --secondary: #ff8da1;
+  --accent: #ff1493;
+  --background: #fff0f5;
+  --light: #ffe4e8;
+  --dark: #333333;
+  --text-color: #333;
+  --transition: 0.3s ease;
+  --shadow: 0 8px 20px rgba(255, 105, 180, 0.15);
+  --border-radius: 15px;
+}
+
+/* Estilos Globales */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--background), #ffffff);
+  color: var(--text-color);
+  text-align: center;
+  padding-top: 80px;
+  line-height: 1.6;
+}
+
+/* Banner superior */
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  padding: 15px 0;
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.banner h2 {
+  font-size: 28px;
+  letter-spacing: 1px;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Contenedor principal */
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* Grid de botones */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin: 40px 0;
+}
+
+.button-recuerdos {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  padding: 18px 15px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.button-recuerdos:before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(45deg, var(--primary), transparent, var(--secondary));
+  z-index: -1;
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.button-recuerdos:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(255, 105, 180, 0.3);
+}
+
+.button-recuerdos:hover:before {
+  opacity: 0.8;
+}
+
+/* Caja del reloj */
+.clock-container {
+  background: linear-gradient(135deg, #ffffff, var(--light));
+  padding: 25px;
+  margin: 30px auto;
+  max-width: 400px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.clock-container:before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 100px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  top: -50px;
+  left: -25%;
+  transform: rotate(25deg);
+  animation: shine 6s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(100%) rotate(25deg); }
+}
+
+/* Cita diaria */
+#daily-quote {
+  font-size: 1.5rem;
+  margin: 30px auto;
+  color: var(--accent);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  max-width: 700px;
+  padding: 0 20px;
+  font-family: 'Dancing Script', cursive;
+  line-height: 1.4;
+}
+
+/* Contenedor para contador/tiempo juntos */
+.timer-container {
+  background: linear-gradient(to right bottom, #ffffff, var(--light));
+  padding: 25px;
+  border-radius: var(--border-radius);
+  margin: 30px auto;
+  box-shadow: var(--shadow);
+  max-width: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+.timer-container h3 {
+  color: var(--primary);
+  margin-bottom: 20px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.8rem;
+}
+
+.timer-container .time-values {
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.timer-container .time-values div {
+  text-align: center;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  min-width: 80px;
+}
+
+/* Calendario */
+.calendar-container {
+  background: linear-gradient(135deg, #fff5f7, #fff);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  max-width: 600px;
+  margin: 40px auto;
+  position: relative;
+}
+
+.calendar-container .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendar-container .header button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--primary);
+  cursor: pointer;
+  transition: transform var(--transition);
+}
+
+.calendar-container .header button:hover {
+  transform: scale(1.1);
+}
+
+/* Botones generales */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: transform var(--transition);
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Elementos flotantes decorativos */
+.floating-hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff69b4"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
+  opacity: 0.6;
+  animation: float-heart 15s linear infinite;
+}
+
+@keyframes float-heart {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-container { 
+    padding: 20px;
+    margin: 20px 10px;
+  }
+  .button-grid { 
+    grid-template-columns: 1fr; 
+    gap: 15px;
+  }
+  #daily-quote { 
+    font-size: 1.3rem; 
+  }
+  .timer-container .time-values {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .timer-container .time-values div {
+    min-width: 70px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner h2 {
+    font-size: 22px;
+  }
+  .calendar-container {
+    padding: 15px;
+  }
+}

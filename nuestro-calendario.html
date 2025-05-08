@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Calendario de Amor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff69b4;
+            --primary-light: #ff8da1;
+            --primary-dark: #ff1493;
+            --secondary: #ffd1dc;
+            --text: #333333;
+            --background: #fff0f5;
+            --white: #ffffff;
+            --shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--background);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 a20,20 0 0,1 40,0 a20,20 0 0,1 -40,0 z M50,30 a20,20 0 0,1 0,40 a20,20 0 0,1 0,-40 z" fill="#ffb6c1" opacity="0.1"/></svg>');
+            background-size: 100px 100px;
+            color: var(--text);
+            text-align: center;
+            overflow-x: hidden;
+            padding-top: 120px;
+            padding-bottom: 50px;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 15px 0;
+            color: var(--white);
+            font-size: 28px;
+            font-family: 'Pacifico', cursive;
+            letter-spacing: 2px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header i {
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+            margin: 0 5px;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Calendario principal */
+        .calendar-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            margin-bottom: 40px;
+            border: 3px solid var(--primary-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .calendar-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                rgba(255, 105, 180, 0.05), 
+                transparent 30%
+            );
+            animation: rotate-bg 15s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes rotate-bg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .month-year {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2em;
+            color: var(--primary-dark);
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .weekday {
+            font-weight: bold;
+            color: var(--primary-dark);
+            padding: 10px;
+            background-color: rgba(255, 209, 220, 0.3);
+            border-radius: 10px;
+        }
+        
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .day {
+            position: relative;
+            height: 100px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 5px;
+            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .day:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+        }
+        
+        .day-number {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--text);
+        }
+        
+        .day.today {
+            background: linear-gradient(135deg, #ffe4e8, #ffd1dc);
+            border: 2px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        .day.today .day-number {
+            color: var(--primary-dark);
+            font-weight: bold;
+        }
+        
+        .day.special {
+            background: linear-gradient(135deg, #fff0f5, #ffe4e8);
+            border: 2px dashed var(--primary);
+        }
+        
+        .day.special::after {
+            content: '❤️';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 1em;
+        }
+        
+        .day.inactive {
+            background-color: rgba(245, 245, 245, 0.7);
+            cursor: default;
+            color: #aaa;
+        }
+        
+        .day.future {
+            background-color: rgba(245, 245, 245, 0.5);
+            cursor: not-allowed;
+        }
+        
+        .day.future::after {
+            content: '🔒';
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 0.8em;
+        }
+        
+        .day-content {
+            margin-top: 25px;
+            font-size: 0.8em;
+            text-align: center;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        .memory-icon {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        
+        .memory-text {
+            font-size: 0.75em;
+            line-height: 1.2;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        /* Modal para ver detalles del día */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 90%;
+            width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5);
+            position: relative;
+            animation: zoomIn 0.3s;
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--secondary);
+        }
+        
+        .modal-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            transform: scale(1.2);
+            color: var(--primary-dark);
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .memory-detail {
+            background-color: rgba(255, 240, 245, 0.5);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .memory-detail h4 {
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .memory-detail p {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .memory-image {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #aaa, #888);
+        }
+        
+        /* Sección de eventos especiales */
+        .special-events {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            margin-bottom: 40px;
+            border: 3px solid var(--primary-light);
+            position: relative;
+        }
+        
+        .special-events h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em;
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+        }
+        
+        .events-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .event-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+        }
+        
+        .event-date {
+            font-size: 0.9em;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .event-title {
+            font-size: 1.2em;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .event-description {
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: var(--text);
+        }
+        
+        .event-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            opacity: 0.3;
+        }
+        
+        /* Sección de momentos juntos */
+        .moments-section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            border: 3px solid var(--primary-light);
+            position: relative;
+        }
+        
+        .moments-section h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em;
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+        }
+        
+        .moments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .moment-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .moment-card:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+        }
+        
+        .moment-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .moment-info {
+            padding: 15px;
+        }
+        
+        .moment-date {
+            font-size: 0.8em;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .moment-title {
+            font-size: 1em;
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .moment-description {
+            font-size: 0.8em;
+            line-height: 1.4;
+            color: var(--text);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Modal para detalles del momento */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 90%;
+            width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5);
+            position: relative;
+            animation: zoomIn 0.3s;
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--secondary);
+        }
+        
+        .modal-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            transform: scale(1.2);
+            color: var(--primary-dark);
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .memory-detail {
+            background-color: rgba(255, 240, 245, 0.5);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .memory-detail h4 {
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .memory-detail p {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .memory-image {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #aaa, #888);
+        }
+        
+        /* Botón para volver al inicio */
+        .back-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+        }
+        
+        .back-btn i {
+            margin-right: 5px;
+        }
+        
+        /* Animación de confeti para días especiales */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f2d74e;
+            opacity: 0;
+            z-index: 1000;
+            animation: confetti-fall 5s ease-out forwards;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .days {
+                gap: 5px;
+            }
+            
+            .day {
+                height: 80px;
+            }
+            
+            .memory-icon {
+                font-size: 1.2em;
+            }
+            
+            .memory-text {
+                font-size: 0.7em;
+                -webkit-line-clamp: 1;
+            }
+            
+            .events-list, .moments-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .days {
+                gap: 3px;
+            }
+            
+            .day {
+                height: 60px;
+                padding: 3px;
+            }
+            
+            .day-number {
+                font-size: 0.9em;
+            }
+            
+            .memory-icon {
+                font-size: 1em;
+                margin-bottom: 2px;
+            }
+            
+            .memory-text {
+                display: none;
+            }
+            
+            .events-list, .moments-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Mensaje emergente para Bubu */
+        .message-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .message-content {
+            background: linear-gradient(135deg, #fff0f5, #ffe4e8);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5);
+            position: relative;
+            border: 3px solid var(--primary-light);
+            text-align: center;
+        }
+        
+        .close-message-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-message-btn:hover {
+            transform: scale(1.2);
+            color: var(--primary-dark);
+        }
+        
+        .message-header {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+        }
+        
+        .message-body {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        
+        .message-body p {
+            margin-bottom: 15px;
+        }
+        
+        .message-signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5em;
+            color: var(--primary-dark);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="bi bi-calendar-heart"></i> Nuestro Calendario de Amor <i class="bi bi-heart-fill"></i></h1>
+    </div>
+    
+    <!-- Mensaje emergente para Bubu -->
+    <div class="message-overlay" id="messageOverlay">
+        <div class="message-content animate__animated animate__bounceIn">
+            <button class="close-message-btn" id="closeMessageBtn"><i class="bi bi-x-lg"></i></button>
+            <div class="message-header">
+                <i class="bi bi-heart-fill"></i> Mensaje para mi Bubu <i class="bi bi-heart-fill"></i>
+            </div>
+            <div class="message-body">
+                <p>Mi amor hermoso, este calendario aún está en construcción. Iré agregando más momentos especiales, fotos y sorpresas con el tiempo.</p>
+                <p>No te preocupes, mi Bubu, esto es solo el comienzo de algo muy bonito que estoy creando para ti.</p>
+                <p class="message-signature">Con todo mi amor, tu novio ❤️</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="nav-buttons">
+                    <button id="prevMonth" class="nav-btn"><i class="bi bi-chevron-left"></i></button>
+                    <button id="today" class="nav-btn"><i class="bi bi-calendar-check"></i></button>
+                </div>
+                <h2 class="month-year" id="monthYear">Mayo 2025</h2>
+                <div class="nav-buttons">
+                    <button id="nextMonth" class="nav-btn"><i class="bi bi-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            <div class="weekdays">
+                <div class="weekday">Dom</div>
+                <div class="weekday">Lun</div>
+                <div class="weekday">Mar</div>
+                <div class="weekday">Mié</div>
+                <div class="weekday">Jue</div>
+                <div class="weekday">Vie</div>
+                <div class="weekday">Sáb</div>
+            </div>
+            
+            <div class="days" id="daysContainer">
+                <!-- Los días se generarán dinámicamente con JavaScript -->
+            </div>
+        </div>
+        
+        <div class="special-events">
+            <h2>Eventos Especiales</h2>
+            <div class="events-list">
+                <div class="event-card">
+                    <div class="event-icon">💑</div>
+                    <div class="event-date">20 de septiembre, 2025</div>
+                    <div class="event-title">Nuestro Aniversario 1 año juntitos</div>
+                    <div class="event-description">Celebrando nuestro primer año de amor y felicidad juntos. ¡Te amo cada día más!</div>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-icon">🎂</div>
+                    <div class="event-date">18 de diciembre, 2025</div>
+                    <div class="event-title">Tu Cumpleaños</div>
+                    <div class="event-description">El día en que llegó al mundo la persona más hermosa, unica y perfecta.</div>
+                </div>
+                
+
+            </div>
+        </div>
+        
+        <div class="moments-section">
+            <h2>Nuestros Momentos Juntos</h2>
+            <div class="moments-grid">
+                <div class="moment-card">
+                    <img src="https://i.ibb.co/mrwfyv3K/IMG-20241119-WA0018.jpg" alt="Momento especial" class="moment-image">
+                    <div class="moment-info">
+                        <div class="moment-date">17 de agosto, 2024</div>
+                        <div class="moment-title">Primer Beso</div>
+                        <div class="moment-description">El momento en que nuestros labios se encontraron por primera vez, aunque el lugar fue un carrete pero fue hermoso igual jiji preciosa.</div>
+                    </div>
+                </div>
+                
+                <div class="moment-card">
+                    <img src="https://i.ibb.co/PvVLRvRq/IMG-20241016-231244-733.jpg" alt="Momento especial" class="moment-image">
+                    <div class="moment-info">
+                        <div class="moment-date">18 diciembre del 2006</div>
+                        <div class="moment-title">Llega al mundo</div>
+                        <div class="moment-description">una personita que sin saberlo algún día se convertiría en lo más bonito que me pudo pasar..</div>
+                    </div>
+                </div>
+                
+                
+                </div>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn"><i class="bi bi-house-heart"></i> Volver al Inicio</a>
+    </div>
+    
+    <!-- Modal para detalles del día -->
+    <div class="modal-overlay" id="dayModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">14 de Febrero, 2025</h3>
+                <button class="close-btn" id="closeModal"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="memory-detail">
+                    <h4>Nuestro Aniversario</h4>
+                    <p>Hoy celebramos un año más de amor, risas y aventuras juntos. Cada momento a tu lado es un tesoro que guardo en mi corazón.</p>
+                    <img src="https://i.ibb.co/mrwfyv3K/IMG-20241119-WA0018.jpg" alt="Aniversario" class="memory-image">
+                </div>
+                
+                <div class="memory-detail">
+                    <h4>Regalo Especial</h4>
+                    <p>Te sorprendí con ese regalo que tanto querías. Tu sonrisa al abrirlo fue el mejor regalo para mí.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeModalBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para detalles del momento -->
+    <div class="modal-overlay" id="momentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="momentModalTitle">Nuestro Momento Especial</h3>
+                <button class="close-btn" id="closeMomentModal"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body" id="momentModalBody">
+                <div class="memory-detail">
+                    <img id="momentModalImage" src="" alt="Momento especial" class="memory-image">
+                    <h4 id="momentModalSubtitle"></h4>
+                    <p id="momentModalDescription"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeMomentModalBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Datos de eventos y recuerdos
+        const specialDates = [
+            { date: new Date(2025, 8, 20), title: "Nuestro Aniversario", icon: "❤️", description: "nuestro primer año juntitos" },
+            { date: new Date(0 , 0, 0), title: "Tu Cumpleaños", icon: "🎂", description: "Un año más de vida" },
+            { date: new Date(0 , 0, 0), title: "Viaje a la Playa", icon: "🏖️", description: "Vacaciones juntos" },
+            { date: new Date(0 , 0, 0), title: "Nuestra Navidad", icon: "🎄", description: "Celebrando juntos" },
+            { date: new Date(2025, 2, 20), title: "Dia de skincare", icon: "🍷", description: "Me domo la vestia de mi novia" },
+            { date: new Date(2025, 1, 14), title: "nuestro primer 14 de febrero", icon: "🌳", description: "Tarde maravillosa junto a mi bubu <3" },
+            { date: new Date(0 , 0, 0), title: "Nuestro Picnic", icon: "🧺", description: "Día al aire libre" },
+            { date: new Date(0 , 0, 0), title: "Concierto Favorito", icon: "🎵", description: "Música y amor" },
+            { date: new Date(0 , 0, 0), title: "Noche de Películas", icon: "🎬", description: "Maratón de películas" },
+            { date: new Date(0 , 0, 0), title: "Halloween Juntos", icon: "🎃", description: "Disfraces y diversión" },
+            { date: new Date(0 , 0, 0), title: "Primer Beso", icon: "💋", description: "Recordando nuestro inicio" }
+        ];
+        // Variables globales
+let currentDate = new Date();
+let currentMonth = currentDate.getMonth();
+let currentYear = currentDate.getFullYear();
+
+// Elementos DOM
+const daysContainer = document.getElementById('daysContainer');
+const monthYearElement = document.getElementById('monthYear');
+const prevMonthBtn = document.getElementById('prevMonth');
+const nextMonthBtn = document.getElementById('nextMonth');
+const todayBtn = document.getElementById('today');
+const dayModal = document.getElementById('dayModal');
+const closeModal = document.getElementById('closeModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+
+// Nombres de meses en español
+const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+// Inicializar calendario
+function initCalendar() {
+    updateCalendar();
+    setupEventListeners();
+}
+
+// Actualizar el calendario con el mes y año actual
+function updateCalendar() {
+    // Actualizar el título del mes y año
+    monthYearElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    
+    // Limpiar el contenedor de días
+    daysContainer.innerHTML = '';
+    
+    // Obtener el primer día del mes
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    
+    // Obtener el número de días en el mes
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    
+    // Días del mes anterior para completar la primera semana
+    const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+    
+    // Crear días del mes anterior (inactivos)
+    for (let i = firstDay - 1; i >= 0; i--) {
+        const dayElement = createDayElement(prevMonthDays - i, 'inactive');
+        daysContainer.appendChild(dayElement);
+    }
+    
+    // Fecha actual para comparar
+    const today = new Date();
+    const isCurrentMonth = today.getMonth() === currentMonth && today.getFullYear() === currentYear;
+    
+    // Crear días del mes actual
+    for (let day = 1; day <= daysInMonth; day++) {
+        // Verificar si es hoy
+        const isToday = isCurrentMonth && day === today.getDate();
+        
+        // Verificar si es un día especial
+        const dateToCheck = new Date(currentYear, currentMonth, day);
+        const isSpecial = specialDates.some(specialDate => 
+            specialDate.date.getDate() === dateToCheck.getDate() && 
+            specialDate.date.getMonth() === dateToCheck.getMonth() && 
+            specialDate.date.getFullYear() === dateToCheck.getFullYear()
+        );
+        
+        // Verificar si es una fecha futura
+        const isFuture = dateToCheck > today;
+        
+        // Crear el elemento del día con la clase correspondiente
+        let className = '';
+        if (isToday) className = 'today';
+        else if (isSpecial) className = 'special';
+        else if (isFuture) className = 'future';
+        
+        const dayElement = createDayElement(day, className, dateToCheck);
+        daysContainer.appendChild(dayElement);
+    }
+    
+    // Calcular cuántos días del próximo mes necesitamos mostrar
+    const totalDaysDisplayed = daysContainer.childElementCount;
+    const remainingCells = 42 - totalDaysDisplayed; // 6 filas x 7 días = 42
+    
+    // Crear días del próximo mes (inactivos)
+    for (let day = 1; day <= remainingCells; day++) {
+        const dayElement = createDayElement(day, 'inactive');
+        daysContainer.appendChild(dayElement);
+    }
+}
+
+// Crear elemento de día
+function createDayElement(day, className, date) {
+    const dayElement = document.createElement('div');
+    dayElement.classList.add('day');
+    if (className) dayElement.classList.add(className);
+    
+    const dayNumber = document.createElement('div');
+    dayNumber.classList.add('day-number');
+    dayNumber.textContent = day;
+    dayElement.appendChild(dayNumber);
+    
+    // Si es un día especial, agregar contenido
+    if (className === 'special' && date) {
+        const specialDate = specialDates.find(specialDate => 
+            specialDate.date.getDate() === date.getDate() && 
+            specialDate.date.getMonth() === date.getMonth() && 
+            specialDate.date.getFullYear() === date.getFullYear()
+        );
+        
+        if (specialDate) {
+            const dayContent = document.createElement('div');
+            dayContent.classList.add('day-content');
+            
+            const icon = document.createElement('div');
+            icon.classList.add('memory-icon');
+            icon.textContent = specialDate.icon;
+            dayContent.appendChild(icon);
+            
+            const text = document.createElement('div');
+            text.classList.add('memory-text');
+            text.textContent = specialDate.title;
+            dayContent.appendChild(text);
+            
+            dayElement.appendChild(dayContent);
+            
+            // Añadir evento de clic para mostrar detalles
+            dayElement.addEventListener('click', () => showDayDetails(date, specialDate));
+        }
+    } else if (className !== 'inactive' && className !== 'future') {
+        // Para días normales (no inactivos ni futuros)
+        dayElement.addEventListener('click', () => {
+            if (date) showDayDetails(date);
+        });
+    }
+    
+    return dayElement;
+}
+
+// Mostrar detalles del día
+function showDayDetails(date, specialDate) {
+    // Formatear la fecha
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = date.toLocaleDateString('es-ES', options);
+    modalTitle.textContent = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+    
+    // Limpiar el cuerpo del modal
+    modalBody.innerHTML = '';
+    
+    if (specialDate) {
+        // Crear detalles para día especial
+        const memoryDetail = document.createElement('div');
+        memoryDetail.classList.add('memory-detail');
+        
+        const title = document.createElement('h4');
+        title.textContent = specialDate.title;
+        memoryDetail.appendChild(title);
+        
+        const description = document.createElement('p');
+        description.textContent = specialDate.description;
+        memoryDetail.appendChild(description);
+        
+        // Añadir imagen si está disponible
+        if (specialDate.image) {
+            const image = document.createElement('img');
+            image.src = specialDate.image;
+            image.alt = specialDate.title;
+            image.classList.add('memory-image');
+            memoryDetail.appendChild(image);
+        }
+        
+        modalBody.appendChild(memoryDetail);
+        
+        // Añadir animación de confeti para días especiales
+        createConfetti();
+    } else {
+        // Para días normales
+        const emptyMessage = document.createElement('p');
+        emptyMessage.textContent = 'Este día aún no tiene recuerdos especiales. ¡Haz algo memorable hoy!';
+        emptyMessage.style.textAlign = 'center';
+        emptyMessage.style.padding = '20px';
+        emptyMessage.style.color = '#888';
+        modalBody.appendChild(emptyMessage);
+    }
+    
+    // Mostrar el modal
+    dayModal.style.display = 'flex';
+}
+
+// Crear efecto de confeti
+function createConfetti() {
+    const colors = ['#ff69b4', '#ff8da1', '#ffd1dc', '#ffb6c1', '#ff1493'];
+    
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        
+        // Posición aleatoria
+        confetti.style.left = Math.random() * 100 + 'vw';
+        
+        // Tamaño aleatorio
+        const size = Math.random() * 10 + 5;
+        confetti.style.width = size + 'px';
+        confetti.style.height = size + 'px';
+        
+        // Color aleatorio
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Forma aleatoria (corazón o círculo)
+        if (Math.random() > 0.5) {
+            confetti.style.borderRadius = '50%';
+        } else {
+            confetti.innerHTML = '❤️';
+            confetti.style.fontSize = size + 'px';
+            confetti.style.backgroundColor = 'transparent';
+        }
+        
+        // Velocidad aleatoria
+        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+        
+        document.body.appendChild(confetti);
+        
+        // Eliminar después de la animación
+        setTimeout(() => {
+            confetti.remove();
+        }, 5000);
+    }
+}
+
+// Configurar event listeners
+function setupEventListeners() {
+    // Botones de navegación
+    prevMonthBtn.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        updateCalendar();
+    });
+    
+    nextMonthBtn.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        updateCalendar();
+    });
+    
+    todayBtn.addEventListener('click', () => {
+        currentMonth = new Date().getMonth();
+        currentYear = new Date().getFullYear();
+        updateCalendar();
+    });
+    
+    // Cerrar modal
+    closeModal.addEventListener('click', () => {
+        dayModal.style.display = 'none';
+    });
+    
+    closeModalBtn.addEventListener('click', () => {
+        dayModal.style.display = 'none';
+    });
+    
+    // Cerrar modal al hacer clic fuera
+    dayModal.addEventListener('click', (e) => {
+        if (e.target === dayModal) {
+            dayModal.style.display = 'none';
+        }
+    });
+    
+    // Configurar los modales de momentos
+    setupMomentCards();
+}
+
+// Configurar las tarjetas de momentos
+function setupMomentCards() {
+    const momentCards = document.querySelectorAll('.moment-card');
+    const momentModal = document.getElementById('momentModal');
+    const closeMomentModal = document.getElementById('closeMomentModal');
+    const closeMomentModalBtn = document.getElementById('closeMomentModalBtn');
+    const momentModalTitle = document.getElementById('momentModalTitle');
+    const momentModalSubtitle = document.getElementById('momentModalSubtitle');
+    const momentModalDescription = document.getElementById('momentModalDescription');
+    const momentModalImage = document.getElementById('momentModalImage');
+    
+    // Añadir evento de clic a cada tarjeta
+    momentCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Obtener datos de la tarjeta
+            const title = card.querySelector('.moment-title').textContent;
+            const date = card.querySelector('.moment-date').textContent;
+            const description = card.querySelector('.moment-description').textContent;
+            const imageSrc = card.querySelector('.moment-image').src;
+            
+            // Actualizar el modal con los datos
+            momentModalTitle.textContent = date;
+            momentModalSubtitle.textContent = title;
+            momentModalDescription.textContent = description;
+            momentModalImage.src = imageSrc;
+            
+            // Mostrar el modal con animación
+            momentModal.style.display = 'flex';
+            momentModal.querySelector('.modal-content').classList.add('animate__animated', 'animate__zoomIn');
+            
+            // Añadir efecto de confeti para celebrar el momento
+            createConfetti();
+        });
+    });
+    
+    // Cerrar modal al hacer clic en botones de cierre
+    closeMomentModal.addEventListener('click', function() {
+        closeMomentModalWithAnimation();
+    });
+    
+    closeMomentModalBtn.addEventListener('click', function() {
+        closeMomentModalWithAnimation();
+    });
+    
+    // Cerrar modal al hacer clic fuera
+    momentModal.addEventListener('click', function(e) {
+        if (e.target === momentModal) {
+            closeMomentModalWithAnimation();
+        }
+    });
+    
+    // Función para cerrar el modal con animación
+    function closeMomentModalWithAnimation() {
+        const modalContent = momentModal.querySelector('.modal-content');
+        modalContent.classList.remove('animate__zoomIn');
+        modalContent.classList.add('animate__zoomOut');
+        
+        setTimeout(function() {
+            momentModal.style.display = 'none';
+            modalContent.classList.remove('animate__zoomOut');
+            modalContent.classList.add('animate__zoomIn');
+        }, 500);
+    }
+}
+
+// Añadir imágenes a eventos especiales
+specialDates.forEach((event, index) => {
+    // Asignar imágenes a eventos especiales (ajusta las URLs según tus imágenes)
+    const imageUrls = [
+        "https://i.ibb.co/mrwfyv3K/IMG-20241119-WA0018.jpg",
+        "https://i.ibb.co/93b8WdrG/AGC-20250214-173850853.jpg",
+        "https://i.ibb.co/vv3z1HxL/AGC-20250214-191359478.jpg",
+        "https://i.ibb.co/WWnXMDGc/IMG-20241107-WA0004.jpg"
+    ];
+    
+    // Asignar imágenes de forma cíclica
+    event.image = imageUrls[index % imageUrls.length];
+});
+
+// Iniciar el calendario cuando se carga la página
+document.addEventListener('DOMContentLoaded', function() {
+    initCalendar();
+    
+    // Configurar el mensaje emergente
+    const messageOverlay = document.getElementById('messageOverlay');
+    const closeMessageBtn = document.getElementById('closeMessageBtn');
+    
+    closeMessageBtn.addEventListener('click', function() {
+        messageOverlay.classList.add('animate__animated', 'animate__fadeOut');
+        setTimeout(function() {
+            messageOverlay.style.display = 'none';
+        }, 500);
+    });
+});
+</script>

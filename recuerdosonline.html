@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuerdos de Familia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #ff9ecd;
+      --secondary-color: #b5a8ff;
+      --background-color: #fff5f8;
+      --text-color: #6a4d57;
+      --shadow: 0 8px 16px rgba(255, 158, 205, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 2rem;
+      background-image: linear-gradient(45deg, #fff9fb 25%, transparent 25%),
+        linear-gradient(-45deg, #fff9fb 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #fff9fb 75%),
+        linear-gradient(-45deg, transparent 75%, #fff9fb 75%);
+      background-size: 20px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .formulario {
+      background: white;
+      padding: 2rem;
+      border-radius: 25px;
+      box-shadow: var(--shadow);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      border: 2px solid rgba(255, 158, 205, 0.3);
+    }
+
+    input[type="file"] {
+      border: 2px dashed var(--secondary-color);
+      padding: 1rem;
+      border-radius: 8px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    select {
+      padding: 0.8rem;
+      border: 2px solid var(--secondary-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 158, 205, 0.3);
+    }
+
+    button:hover {
+      background-color: #ffb5d8;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 158, 205, 0.4);
+    }
+
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 1rem;
+    }
+
+    .galeria > div {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 25px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid rgba(255, 158, 205, 0.1);
+    }
+
+    .galeria > div:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(255, 158, 205, 0.3);
+      box-shadow: 0 12px 24px rgba(255, 158, 205, 0.2);
+    }
+
+    .galeria img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .galeria p {
+      text-align: center;
+      color: var(--text-color);
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .galeria {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+      
+      
+    }
+    .body-overlay-active {
+      overflow: hidden;
+      padding-right: 17px; /* Compensar el ancho de la barra de desplazamiento */
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 158, 205, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .overlay img {
+      max-width: 95%;
+      max-height: 70vh;
+      border-radius: 15px;
+      margin: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      object-fit: contain;
+    }
+
+    .overlay-content {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 0 1rem;
+      width: 95%;
+      max-width: 600px;
+    }
+
+    .overlay-content h2 {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .overlay-content p {
+      color: var(--text-color);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+      color: white;
+      text-align: center;
+      margin-top: 1.5rem;
+      padding: 0 2rem;
+      max-width: 800px;
+    }
+
+    .overlay-content h2 {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .overlay-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 2.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0.5rem;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .overlay-close:hover {
+      opacity: 1;
+      transform: rotate(90deg);
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0.5rem;
+    }
+
+    .formulario input[type="text"], 
+    .formulario textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid var(--secondary-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .formulario textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+
+
+
+      </style>
+    </head>
+    <body>
+    
+    <h1>Recuerdos virtuales ninilove</h1>
+    <div align="center">
+
+    
+    
+    <div class="formulario">
+      <input type="file" id="foto" accept="image/*" required>
+      <input type="text" id="titulo" placeholder="Título de la foto :3" required>
+      <input type="text" id="descripcion" placeholder="Descripción :3" required>
+      <select id="categoria">
+        <option value="recuerdos">Recuerdos</option>
+      </select>
+      <button onclick="subirFoto()">Subir Foto</button>
+    </div>
+    
+    <div class="galeria" id="galeria"></div>
+    
+    <div class="overlay" id="overlay">
+      <button class="overlay-close" onclick="cerrarOverlay()">&times;</button>
+      <img id="overlay-img">
+      <div class="overlay-content">
+        <h2 id="overlay-titulo"></h2>
+        <p id="overlay-descripcion"></p>
+      </div>
+    </div>
+    
+    <!-- Primero el script de Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+      const SUPABASE_URL = 'https://ytobrbwfktptciwwugps.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0b2JyYndma3RwdGNpd3d1Z3BzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU4MTA1ODUsImV4cCI6MjA2MTM4NjU4NX0.HlG44lVq9O6rQf6-NCqsSrl1paOB6V4rgUC5YhogIRo';
+      const BUCKET_NAME = 'fotos-ninilove';
+    
+      const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+      async function subirFoto() {
+      const archivoInput = document.getElementById('foto');
+      const titulo = document.getElementById('titulo').value;
+      const descripcion = document.getElementById('descripcion').value;
+      const categoria = document.getElementById('categoria').value;
+      const archivo = archivoInput.files[0];
+    
+      if (!archivo || !titulo || !descripcion) {
+        alert('Por favor complete todos los campos.');
+        return;
+      }
+    
+      // Reemplazar caracteres especiales en el título y la descripción
+      const tituloSeguro = titulo.replace(/[|&;$%@"<>()+,]/g, "_");
+      const descripcionSeguro = descripcion.replace(/[|&;$%@"<>()+,]/g, "_");
+    
+      // Codificar los metadatos en el nombre del archivo
+      const metadataStr = `${encodeURIComponent(tituloSeguro)}_${encodeURIComponent(descripcionSeguro)}`;
+      const nombreArchivo = `${categoria}/${Date.now()}_${metadataStr}_${archivo.name}`;
+    
+      try {
+        const { data, error } = await client.storage.from(BUCKET_NAME).upload(nombreArchivo, archivo, {
+          upsert: true
+        });
+    
+        if (error) {
+          alert('Error al subir la foto');
+          console.error(error);
+        } else {
+          alert('Foto subida con éxito');
+          document.getElementById('titulo').value = '';
+          document.getElementById('descripcion').value = '';
+          document.getElementById('foto').value = '';
+          mostrarFotos();
+        }
+      } catch (error) {
+        console.error('Error al subir la foto:', error);
+        alert('Error al subir la foto');
+      }
+    }
+    
+    
+    async function mostrarFotos() {
+      const galeria = document.getElementById('galeria');
+      galeria.innerHTML = '';
+    
+      try {
+        const { data: carpetas, error } = await client.storage.from(BUCKET_NAME).list('', { limit: 100 });
+    
+        if (error) {
+          console.error('Error al listar carpetas:', error);
+          return;
+        }
+    
+        for (const carpeta of carpetas) {
+          if (carpeta.name === 'recuerdos') {
+            const { data: fotos, error: fotosError } = await client.storage.from(BUCKET_NAME).list(carpeta.name, { limit: 100 });
+    
+            if (fotosError) {
+              console.error(`Error al listar fotos de ${carpeta.name}:`, fotosError);
+              continue;
+            }
+    
+            for (const foto of fotos) {
+              try {
+                let titulo = 'Sin título';
+                let descripcion = 'Sin descripción';
+    
+                // Intentar extraer los metadatos del nombre del archivo
+                const partes = foto.name.split('_');
+                if (partes.length >= 3) {
+                  titulo = decodeURIComponent(partes[1]);
+                  descripcion = decodeURIComponent(partes[2]);
+                }
+    
+                const url = `${SUPABASE_URL.replace('/rest/v1', '')}/storage/v1/object/public/${BUCKET_NAME}/${carpeta.name}/${foto.name}`;
+    
+                const div = document.createElement('div');
+                div.innerHTML = `
+                  <img src="${url}" alt="${titulo}">
+                  <p>${titulo}</p>
+                `;
+                div.onclick = () => abrirOverlay(url, { titulo, descripcion });
+                galeria.appendChild(div);
+              } catch (fotoError) {
+                console.error('Error al procesar foto:', fotoError);
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error general en mostrarFotos:', error);
+      }
+    }
+    
+    
+    function abrirOverlay(url, metadata) {
+      const overlay = document.getElementById('overlay');
+      const overlayImg = document.getElementById('overlay-img');
+      const overlayTitulo = document.getElementById('overlay-titulo');
+      const overlayDescripcion = document.getElementById('overlay-descripcion');
+    
+      document.body.classList.add('body-overlay-active');
+      overlayImg.src = url;
+      overlayTitulo.textContent = metadata.titulo;
+      overlayDescripcion.textContent = metadata.descripcion;
+      overlay.classList.add('active');
+    }
+    
+    function cerrarOverlay() {
+      const overlay = document.getElementById('overlay');
+      document.body.classList.remove('body-overlay-active');
+      overlay.classList.remove('active');
+    }
+    
+      mostrarFotos();
+    </script>
+    
+    </body>
+    </html>
+

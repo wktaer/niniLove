@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartas de Amor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff0f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff69b4, #ff8da1);
+            color: white;
+            padding: 20px 0;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+            margin: 0 auto;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #ffe4e1, #ffd1dc);
+            border: 2px solid #ff69b4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+        }
+
+        .card-back {
+            background: white;
+            transform: rotateY(180deg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 2px solid #ff8da1;
+            overflow-y: auto;
+        }
+
+        .card-title {
+            font-family: 'Dancing Script', cursive;
+            color: #ff1493;
+            font-size: 1.8em;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .card-content {
+            font-family: 'Dancing Script', cursive;
+            color: #333;
+            font-size: 1.2em;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            color: #ff1493;
+            font-size: 1.4em;
+            text-align: right;
+            margin-top: 15px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #ff69b4, #ff8da1);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .heart-burst {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            font-size: 20px;
+            animation: heart-fly 1.5s forwards;
+        }
+
+        @keyframes heart-fly {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.8) rotate(var(--rot));
+            }
+        }
+
+        .floating-heart {
+            position: fixed;
+            color: #ff69b4;
+            opacity: 0.2;
+            pointer-events: none;
+            animation: float-heart 15s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes float-heart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .card {
+                width: 280px;
+                height: 380px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Cartas de Amor</h1>
+    </div>
+
+    <div class="container">
+        <div class="card animate__animated animate__fadeIn">
+            <div class="card-inner">
+                <div class="card-front">
+                    💌
+                </div>
+                <div class="card-back">
+                    <h3 class="card-title">Mi amor precioso</h3>
+                    <p class="card-content">Mi amor precioso, cada día que pasa te amo más y más. Eres la luz que ilumina mi vida, la razón de mi sonrisa y el latido de mi corazón. No puedo imaginar un mundo sin ti, sin tu risa, sin tus abrazos, sin tu forma tan especial de hacerme sentir amado. Gracias por ser mi compañera, mi confidente, mi todo. Prometo amarte cada día como si fuera el último, valorar cada momento juntos y construir un futuro lleno de amor y felicidad.</p>
+                    <p class="signature">Te amo infinitamente,<br>Tu amor ❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card animate__animated animate__fadeIn">
+            <div class="card-inner">
+                <div class="card-front">
+                    💌
+                </div>
+                <div class="card-back">
+                    <h3 class="card-title">Mi dulce princesa</h3>
+                    <p class="card-content">Mi dulce princesa, no hay palabras suficientes para expresar lo que siento por ti. Eres mi sueño hecho realidad, la persona que siempre esperé encontrar. Tu sonrisa ilumina hasta el día más oscuro, tu voz es la melodía más hermosa, y tu amor es el regalo más precioso que he recibido. Cada momento contigo es un tesoro que guardo en mi corazón. Gracias por elegirme, por amarme y por hacer de cada día una aventura maravillosa a tu lado.</p>
+                    <p class="signature">Te amo infinitamente,<br>Tu amor ❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card animate__animated animate__fadeIn">
+            <div class="card-inner">
+                <div class="card-front">
+                    💌
+                </div>
+                <div class="card-back">
+                    <h3 class="card-title">Mi princesa hermosa</h3>
+                    <p class="card-content">Mi princesa hermosa, cada día me sorprendes con tu forma de ser tan especial. Eres la persona más maravillosa que he conocido, con un corazón tan grande y puro que me deja sin palabras. Me encanta cómo te preocupas por los demás, cómo luchas por tus sueños y cómo haces que todo sea mejor con tu presencia. Eres mi motivación para ser mejor persona, mi razón para sonreír y mi compañera de vida. No puedo imaginar un futuro sin ti, porque tú eres mi presente y mi eternidad.</p>
+                    <p class="signature">Te amo infinitamente,<br>Tu amor ❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card animate__animated animate__fadeIn">
+            <div class="card-inner">
+                <div class="card-front">
+                    💌
+                </div>
+                <div class="card-back">
+                    <h3 class="card-title">Mi amor bonito</h3>
+                    <p class="card-content">Mi amor bonito, cada momento contigo es un regalo precioso. Me encanta cómo me haces sentir, cómo me cuidas y cómo me demuestras tu amor de mil formas diferentes. Eres mi refugio en los días difíciles, mi alegría en los momentos felices y mi paz en medio del caos. Tu amor me hace más fuerte, más valiente y más feliz. Gracias por compartir tu vida conmigo, por ser mi compañera de aventuras y por hacer que cada día sea especial. No hay nadie como tú en este mundo.</p>
+                    <p class="signature">Te amo infinitamente,<br>Tu amor ❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card animate__animated animate__fadeIn">
+            <div class="card-inner">
+                <div class="card-front">
+                    💌
+                </div>
+                <div class="card-back">
+                    <h3 class="card-title">Mi tesoro precioso</h3>
+                    <p class="card-content">Mi tesoro precioso, eres lo mejor que me ha pasado en la vida. Cada día descubro algo nuevo que me hace amarte más. Tu forma de reír, tu manera de ver la vida, tu capacidad de hacer que todo sea mejor... todo en ti es perfecto. Me siento el hombre más afortunado del mundo por tenerte a mi lado. Contigo he aprendido que el amor verdadero no solo existe en los cuentos de hadas, sino que puede ser aún más hermoso en la vida real. Gracias por ser mi compañera, mi amor y mi todo.</p>
+                    <p class="signature">Te amo infinitamente,<br>Tu amor ❤️</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-button">Volver al Inicio</a>
+
+    <script>
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('flipped');
+                createHeartBurst(card);
+            });
+        });
+
+        // Función para crear la explosión de corazones
+        function createHeartBurst(card) {
+            const heartSymbols = ['❤️', '💕', '💖', '💘', '💗', '💓', '💞'];
+            const rect = card.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Crear múltiples corazones que salen disparados en diferentes direcciones
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-burst';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                
+                // Posicionar el corazón en el centro de la tarjeta
+                heart.style.left = `${centerX}px`;
+                heart.style.top = `${centerY}px`;
+                
+                // Calcular dirección aleatoria para cada corazón
+                const angle = Math.random() * Math.PI * 2; // ángulo aleatorio en radianes
+                const distance = 50 + Math.random() * 150; // distancia aleatoria
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                const rotation = -180 + Math.random() * 360; // rotación aleatoria
+                
+                // Establecer las variables CSS personalizadas para la animación
+                heart.style.setProperty('--tx', `${tx}px`);
+                heart.style.setProperty('--ty', `${ty}px`);
+                heart.style.setProperty('--rot', `${rotation}deg`);
+                
+                document.body.appendChild(heart);
+                
+                // Eliminar el corazón después de que termine la animación
+                setTimeout(() => {
+                    heart.remove();
+                }, 1500);
+            }
+        }
+
+        // Crear corazones flotantes en el fondo
+        function createFloatingHearts() {
+            const heartSymbols = ['❤️', '💕', '💖', '💘', '💗', '💓', '💞'];
+            const container = document.createElement('div');
+            container.className = 'floating-hearts-container';
+            document.body.appendChild(container);
+            
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                    heart.style.left = `${Math.random() * 100}vw`;
+                    heart.style.animationDuration = `${15 + Math.random() * 10}s`;
+                    heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+                    heart.style.opacity = `${Math.random() * 0.3 + 0.1}`;
+                    
+                    container.appendChild(heart);
+                    
+                    // Eliminar el corazón después de que termine la animación
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 25000);
+                }, i * 1000);
+            }
+            
+            // Continuar creando corazones
+            setTimeout(createFloatingHearts, 15000);
+        }
+
+        // Iniciar los corazones flotantes
+        createFloatingHearts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuerdos de Amor para Karime 💖</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* Estilo general */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff0f5;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 a20,20 0 0,1 40,0 a20,20 0 0,1 -40,0 z M50,30 a20,20 0 0,1 0,40 a20,20 0 0,1 0,-40 z" fill="%23ffb6c1" opacity="0.1"/></svg>');
+            background-size: 100px 100px;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow-x: hidden;
+            padding-top: 120px;
+        }
+
+        .banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #ff69b4, #ff8da1);
+            color: white;
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pulse-banner 2s infinite alternate;
+        }
+
+        @keyframes pulse-banner {
+            0% { box-shadow: 0 2px 10px rgba(255, 105, 180, 0.3); }
+            100% { box-shadow: 0 2px 20px rgba(255, 105, 180, 0.7); }
+        }
+
+        .banner h2 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Pacifico', cursive;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .banner h2 i {
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+            color: #fff;
+            margin: 0 5px;
+        }
+
+        /* Reloj kawaii con Hello Kitty */
+        .kawaii-clock-container {
+            position: static;
+            background: linear-gradient(135deg, #ffe4e8, #ffd1dc);
+            border-radius: 20px;
+            padding: 15px 25px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #ff69b4;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .kawaii-clock {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ff1493;
+            text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.2);
+            margin: 0 10px;
+        }
+
+        .kawaii-clock-kitty {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .kawaii-clock-decoration {
+            font-size: 1.2em;
+            margin: 0 5px;
+        }
+
+        @media (max-width: 768px) {
+            .kawaii-clock-container {
+                padding: 10px 15px;
+                max-width: 90%;
+            }
+            
+            .kawaii-clock {
+                font-size: 1.2em;
+            }
+            
+            .kawaii-clock-kitty {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Contenedor principal con efecto de brillo */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(255, 105, 180, 0.3);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 5px 25px rgba(255, 105, 180, 0.3); }
+            100% { box-shadow: 0 5px 35px rgba(255, 105, 180, 0.7); }
+        }
+
+        /* Mejora de la cuadrícula de botones */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .button-recuerdos {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffe4e8, #ffd1dc);
+            color: #ff1493;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            height: 120px;
+        }
+
+        .button-recuerdos::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff69b4, #ff8da1, #ff69b4, #ff8da1);
+            background-size: 400% 400%;
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .button-recuerdos:hover::before {
+            opacity: 0.7;
+        }
+
+        .button-recuerdos:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
+            border-color: #ff69b4;
+        }
+
+        .button-recuerdos i {
+            font-size: 2em;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .button-recuerdos:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Mejora del calendario */
+        .calendar-container {
+            position: relative;
+            margin: 40px auto;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            border: 3px solid #ffd1dc;
+        }
+
+        .calendar-decoration {
+            position: absolute;
+            font-size: 2.5em;
+            animation: float 6s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .calendar-decoration:nth-child(1) {
+            top: -15px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+
+        .calendar-decoration:nth-child(2) {
+            top: -15px;
+            right: 20px;
+            animation-delay: 1s;
+        }
+
+        .calendar-decoration:nth-child(3) {
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 2s;
+        }
+
+        .calendar-container .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .calendar-container h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8em;
+            color: #ff1493;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.3);
+        }
+
+        .calendar-container button {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: #ff69b4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-container button:hover {
+            background-color: #ffe4e8;
+            transform: scale(1.1);
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: bold;
+            color: #ff69b4;
+            margin-bottom: 10px;
+            border-bottom: 2px dashed #ffd1dc;
+            padding-bottom: 10px;
+        }
+
+        .dates {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .date {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .date:not(.inactive):hover {
+            background-color: #ffe4e8;
+            transform: scale(1.1);
+        }
+
+        .date.today {
+            background-color: #ff69b4;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.5);
+            animation: pulse-border 2s infinite;
+        }
+
+        .date.special {
+            background-color: #ffd1dc;
+            color: #ff1493;
+            font-weight: bold;
+            border: 2px solid #ff69b4;
+        }
+
+        .date.special::after {
+            content: '❤️';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 0.7em;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .date.inactive {
+            color: #ccc;
+            cursor: default;
+        }
+
+        .date.future {
+            color: #aaa;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .date.future::after {
+            content: '🔒';
+            position: absolute;
+            font-size: 0.7em;
+            bottom: -5px;
+            right: -2px;
+            opacity: 0.7;
+        }
+
+        /* Mejora del reloj y contador */
+        .clock-container, .timer-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 228, 232, 0.8), rgba(255, 209, 220, 0.8));
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .clock-container:hover, .timer-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+        }
+
+        .clock-container h3, .timer-container h3 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff1493;
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.3);
+        }
+
+        #clock {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff69b4;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+        }
+
+        .contador-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .contador-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contador-numero {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ff1493;
+            background-color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+            margin-bottom: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contador-numero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 105, 180, 0.1), transparent);
+            top: 0;
+            left: -100%;
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .contador-label {
+            font-size: 0.9em;
+            color: #ff69b4;
+            font-weight: 600;
+        }
+
+        /* Frase romántica mejorada */
+        #daily-quote {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6em;
+            color: #ff1493;
+            line-height: 1.5;
+            padding: 20px;
+            margin: 30px 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+            position: relative;
+            border-left: 5px solid #ff69b4;
+        }
+
+        #daily-quote::before, #daily-quote::after {
+            content: '"';
+            font-size: 3em;
+            position: absolute;
+            color: rgba(255, 105, 180, 0.2);
+            font-family: serif;
+        }
+
+        #daily-quote::before {
+            top: -10px;
+            left: 10px;
+        }
+
+        #daily-quote::after {
+            bottom: -30px;
+            right: 10px;
+        }
+
+        /* Footer mejorado */
+        .copyright {
+            margin-top: 40px;
+            padding: 15px;
+            color: #ff69b4;
+            font-size: 0.9em;
+            position: relative;
+        }
+
+        .copyright p {
+            position: relative;
+            z-index: 2;
+        }
+
+        .copyright::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ff69b4, transparent);
+        }
+
+        /* Animaciones */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 105, 180, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Corazones flotantes */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            background-color: #ff69b4;
+            display: inline-block;
+            height: 25px;
+            width: 25px;
+            transform: rotate(-45deg);
+            opacity: 0.3;
+            animation: float-up 15s linear forwards;
+        }
+
+        .heart:before, .heart:after {
+            content: "";
+            background-color: #ff69b4;
+            border-radius: 50%;
+            height: 25px;
+            position: absolute;
+            width: 25px;
+        }
+
+        .heart:before {
+            top: -12.5px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 12.5px;
+            top: 0;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: rotate(-45deg) translateY(100vh) scale(0.3);
+                opacity: 0.3;
+            }
+            100% {
+                transform: rotate(-45deg) translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Modal de nota especial mejorado */
+        .special-note-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .special-note-content {
+            background: linear-gradient(135deg, #fff0f5, #ffe4e8);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 3px solid #ff69b4;
+            animation: appear 0.5s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .special-note-phrase {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8em;
+            color: #ff1493;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .special-note-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-note-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff8da1);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+        }
+
+        .close-note-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Kawaii overlay */
+        .kawaii-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .hello-kitty {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('https://i.pinimg.com/originals/b4/32/3e/b4323e46f8f3d0a3e3d2897e77965b0a.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hello-kitty:nth-child(1) {
+            top: 20px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+
+        .hello-kitty:nth-child(2) {
+            top: 20px;
+            right: 20px;
+            animation-delay: 1.5s;
+        }
+
+        .hello-kitty:nth-child(3) {
+            bottom: 20px;
+            left: 20px;
+            animation-delay: 1s;
+        }
+
+        .hello-kitty:nth-child(4) {
+            bottom: 20px;
+            right: 20px;
+            animation-delay: 2.5s;
+        }
+
+        /* Confeti de corazones */
+        .heart-confetti, .kitty-confetti {
+            position: fixed;
+            z-index: 1001;
+            animation: fall 4s linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Mensaje de tramposita */
+        .tramposita-message {
+            position: relative;
+            background: linear-gradient(135deg, #fff0f5, #ffe4e8);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 3px solid #ff69b4;
+            z-index: 1001;
+            animation: appear 0.5s ease;
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tramposita-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tramposita-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8em;
+            color: #ff1493;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            width: 100%;
+        }
+        
+        .tramposita-img {
+            max-width: 200px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tramposita-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff8da1);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+        }
+        
+        .tramposita-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contador-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #daily-quote {
+                font-size: 1.3em;
+            }
+            
+            .calendar-container {
+                padding: 15px;
+            }
+            
+            .date {
+                height: 35px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+    <script>
+        // Fecha del próximo encuentro (ajusta esta fecha según corresponda)
+        const fechaEncuentro = new Date('2025-04-17T06:40:00');
+
+        function actualizarContador() {
+            const ahora = new Date();
+            const diferencia = fechaEncuentro - ahora;
+
+            if (diferencia > 0) {
+                const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+                document.getElementById('contador-dias').textContent = dias;
+                document.getElementById('contador-horas').textContent = horas;
+                document.getElementById('contador-minutos').textContent = minutos;
+                document.getElementById('contador-segundos').textContent = segundos;
+            }
+        }
+
+        // Actualizar el contador cada segundo
+        setInterval(actualizarContador, 1000);
+        // Actualizar inmediatamente al cargar la página
+        actualizarContador();
+    </script>
+</head>
+<body>
+    <div class="banner animate__animated animate__fadeIn">
+        <h2>NINI <i class="bi bi-heart-fill"></i> LOVE</h2>
+    </div>
+
+    <!-- Floating hearts background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="main-container animate__animated animate__fadeIn">
+        <!-- Reloj kawaii con Hello Kitty -->
+        <div class="kawaii-clock-container">
+            <img src="https://i.gifer.com/7V0.gif" alt="Hello Kitty Clock" class="kawaii-clock-kitty">
+            <div class="kawaii-clock" id="kawaii-clock"></div>
+            <span class="kawaii-clock-decoration">❤️</span>
+        </div>
+
+        <!-- Reloj digital con diseño mejorado -->
+        <div class="clock-container">
+            <h3>Nuestro Tiempo Juntos</h3>
+            <div id="clock" class="animate__animated animate__pulse animate__infinite"></div>
+        </div>
+
+        <!-- Contador de tiempo juntos mejorado -->
+        <div class="timer-container">
+            <h3>Tiempo Amándonos</h3>
+            <div class="contador-grid">
+                <div class="contador-item">
+                    <div class="contador-numero" id="years">0</div>
+                    <div class="contador-label">Años</div>
+                </div>
+                <div class="contador-item">
+                    <div class="contador-numero" id="months">0</div>
+                    <div class="contador-label">Meses</div>
+                </div>
+                <div class="contador-item">
+                    <div class="contador-numero" id="days">0</div>
+                    <div class="contador-label">Días</div>
+                </div>
+                <div class="contador-item">
+                    <div class="contador-numero" id="hours">0</div>
+                    <div class="contador-label">Horas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de calendario mejorada -->
+        <div class="calendar-container">
+            <div class="calendar-decoration">💕</div>
+            <div class="calendar-decoration">💘</div>
+            <div class="calendar-decoration">💖</div>
+            <div class="header">
+                <button id="prevMonth"><i class="bi bi-chevron-left"></i></button>
+                <h3 id="currentMonth">Abril 2025</h3>
+                <button id="nextMonth"><i class="bi bi-chevron-right"></i></button>
+            </div>
+            <div class="weekdays">
+                <div>Dom</div>
+                <div>Lun</div>
+                <div>Mar</div>
+                <div>Mié</div>
+                <div>Jue</div>
+                <div>Vie</div>
+                <div>Sáb</div>
+            </div>
+            <div class="dates" id="datesContainer"></div>
+        </div>
+
+        <!-- Frase romántica destacada -->
+        <p id="daily-quote" class="animate__animated animate__fadeIn">
+            "Cada día a tu lado es un regalo que atesoro en lo más profundo de mi corazón. Te amo más allá de las palabras, mi dulce Karime."
+        </p>
+
+        <!-- Grid de botones mejorado -->
+        <div class="button-grid">
+            <a href="nuestro-calendario.html" class="button-recuerdos">
+                <i class="bi bi-calendar-heart"></i> Nuestro Calendario
+            </a>
+            <a href="recuerdosonline.html" class="button-recuerdos">
+                <i class="bi bi-images"></i> Nuestros Recuerdos
+            </a>
+            <a href="cartas.html" class="button-recuerdos">
+                <i class="bi bi-chat-heart"></i> Cartitas 
+            </a>
+            <a href="puzzle.html" class="button-recuerdos">
+                <i class="bi bi-puzzle"></i> Juegos de Amor
+            </a>
+            <a href="songs.html" class="button-recuerdos">
+                <i class="bi bi-stars"></i> Te la dedique porque..
+            </a>
+        </div>
+    </div>
+
+    <footer class="copyright">
+        <p>Creado con ❤️ para Karime | &copy; 2025 NiniLover</p>
+    </footer>
+
+    <script src="calendar_data.js"></script>
+    <script>
+        // Crear corazones flotantes
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            const numberOfHearts = 15;
+            
+            for (let i = 0; i < numberOfHearts; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                // Posición aleatoria
+                const left = Math.random() * 100;
+                const size = Math.random() * 15 + 10;
+                const animationDuration = Math.random() * 10 + 10;
+                const delay = Math.random() * 10;
+                
+                heart.style.left = `${left}%`;
+                heart.style.width = `${size}px`;
+                heart.style.height = `${size}px`;
+                heart.style.animationDuration = `${animationDuration}s`;
+                heart.style.animationDelay = `${delay}s`;
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Iniciar los corazones flotantes cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingHearts();
+            
+            // Actualizar contador
+            updateCounter();
+            setInterval(updateCounter, 1000);
+            
+            // Inicializar el calendario
+            renderCalendar();
+            
+            // Agregar event listeners para los botones del calendario
+            document.getElementById('prevMonth').addEventListener('click', function() {
+                changeMonth(-1);
+            });
+            
+            document.getElementById('nextMonth').addEventListener('click', function() {
+                changeMonth(1);
+            });
+        });
+        
+        // Variables globales del calendario
+        let currentDate = new Date();
+        const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+        // Función para actualizar el contador
+        function updateCounter() {
+            // Fecha de inicio (ajusta según tu relación)
+            const startDate = new Date('2024-09-20T00:00:00');
+            const now = new Date();
+            const diff = now - startDate;
+            
+            // Calcular años, meses, días y horas
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+            const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            
+            // Actualizar elementos HTML
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+        }
+
+        // Función para renderizar el calendario
+        function renderCalendar() {
+            const monthElement = document.getElementById('currentMonth');
+            const datesContainer = document.getElementById('datesContainer');
+            
+            // Actualizar el texto del mes actual
+            monthElement.textContent = monthNames[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
+            
+            // Limpiar el contenedor de fechas
+            datesContainer.innerHTML = '';
+            
+            // Obtener el primer día del mes
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            
+            // Obtener el último día del mes
+            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            
+            // Obtener el día de la semana del primer día (0 = Domingo, 1 = Lunes, etc.)
+            const firstDayIndex = firstDay.getDay();
+            
+            // Obtener el número total de días en el mes
+            const totalDays = lastDay.getDate();
+            
+            // Obtener la fecha actual real (no la que se muestra en el calendario)
+            const today = new Date();
+            
+            // Crear celdas vacías para los días anteriores al primer día del mes
+            for (let i = 0; i < firstDayIndex; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.classList.add('date', 'empty');
+                datesContainer.appendChild(emptyDay);
+            }
+            
+            // Crear celdas para cada día del mes
+            for (let day = 1; day <= totalDays; day++) {
+                const dateElement = document.createElement('div');
+                dateElement.classList.add('date');
+                dateElement.textContent = day;
+                
+                // Verificar si es hoy
+                if (
+                    today.getDate() === day &&
+                    today.getMonth() === currentDate.getMonth() &&
+                    today.getFullYear() === currentDate.getFullYear()
+                ) {
+                    dateElement.classList.add('today');
+                }
+                
+                // Verificar si es una fecha especial
+                const month = (currentDate.getMonth() + 1).toString(); // getMonth() devuelve 0-11, pero necesitamos 1-12
+                const year = currentDate.getFullYear().toString();
+                const note = getSpecialNote(month, day, year);
+                
+                if (note) {
+                    dateElement.classList.add('special-date');
+                    // Añadir indicador visual
+                    const indicator = document.createElement('span');
+                    indicator.classList.add('special-indicator');
+                    indicator.textContent = '❤️';
+                    dateElement.appendChild(indicator);
+                }
+                
+                // Verificar si la fecha es futura (después de hoy)
+                const currentDateObj = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                const isFutureDate = currentDateObj > today;
+                
+                if (isFutureDate) {
+                    dateElement.classList.add('future-date');
+                    // Deshabilitar el clic en fechas futuras
+                    dateElement.style.cursor = 'not-allowed';
+                    dateElement.style.opacity = '0.5';
+                    
+                    // Agregar evento para mostrar mensaje de tramposita
+                    dateElement.addEventListener('click', () => {
+                        showTramposita();
+                    });
+                } else {
+                    // Solo añadir evento de clic para fechas no futuras
+                    dateElement.addEventListener('click', () => {
+                        // Verificar si hay una nota especial para esta fecha
+                        const specialNote = getSpecialNote(month, day, year);
+                        if (specialNote) {
+                            showSpecialNote(month, day, year);
+                        }
+                    });
+                }
+                
+                datesContainer.appendChild(dateElement);
+            }
+        }
+
+        // Función para cambiar de mes
+        function changeMonth(offset) {
+            currentDate.setMonth(currentDate.getMonth() + offset);
+            renderCalendar();
+        }
+
+        // Función para mostrar la nota especial
+        function showSpecialNote(month, day, year) {
+            // Verificar si existe una nota especial para esta fecha
+            const specialNote = getSpecialNote(month, day, year);
+            
+            if (specialNote) {
+                console.log("Mostrando nota especial:", specialNote); // Para depuración
+                
+                // Crear el modal si no existe
+                let modal = document.querySelector('.special-note-modal');
+                if (!modal) {
+                    modal = document.createElement('div');
+                    modal.className = 'special-note-modal';
+                    document.body.appendChild(modal);
+                }
+                
+                // Limpiar el contenido anterior
+                modal.innerHTML = '';
+                
+                // Crear el overlay kawaii
+                const kawaiOverlay = document.createElement('div');
+                kawaiOverlay.className = 'kawaii-overlay';
+                
+                // Agregar Hello Kitty al overlay
+                for (let i = 0; i < 4; i++) {
+                    const kitty = document.createElement('div');
+                    kitty.className = 'hello-kitty';
+                    kawaiOverlay.appendChild(kitty);
+                }
+                
+                modal.appendChild(kawaiOverlay);
+                
+                // Crear el contenido de la nota
+                const content = document.createElement('div');
+                content.className = 'special-note-content';
+                
+                // Añadir la frase
+                const phrase = document.createElement('p');
+                phrase.className = 'special-note-phrase';
+                phrase.textContent = specialNote.phrase;
+                content.appendChild(phrase);
+                
+                // Añadir la imagen si existe
+                if (specialNote.img) {
+                    const img = document.createElement('img');
+                    img.className = 'special-note-image';
+                    img.src = specialNote.img;
+                    img.alt = 'Imagen especial';
+                    content.appendChild(img);
+                }
+                
+                // Añadir el botón de cerrar
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'close-note-btn';
+                closeBtn.textContent = 'Cerrar con Amor ❤️';
+                closeBtn.onclick = function() {
+                    modal.style.display = 'none';
+                    // Detener la animación de confeti
+                    clearTimeout(confettiTimeout);
+                    // Eliminar los corazones de confeti
+                    document.querySelectorAll('.heart-confetti, .kitty-confetti').forEach(element => {
+                        element.remove();
+                    });
+                };
+                content.appendChild(closeBtn);
+                
+                // Añadir el contenido al modal
+                modal.appendChild(content);
+                
+                // Mostrar el modal
+                modal.style.display = 'flex';
+                
+                // Crear efecto de confeti de corazones y Hello Kitty
+                createKawaiiConfetti();
+            } else {
+                console.log("No se encontró nota especial para:", month, day, year); // Para depuración
+            }
+        }
+        
+        // Variable global para el timeout del confeti
+        let confettiTimeout;
+        
+        // Función para crear el efecto de confeti de corazones y Hello Kitty
+        function createKawaiiConfetti() {
+            const symbols = ['❤️', '💕', '💘', '💖', '💗'];
+            const kittyImages = [
+                'https://i.pinimg.com/originals/b4/32/3e/b4323e46d7c5b5d3b5c0c48b06b12a0d.png',
+                'https://i.pinimg.com/originals/39/df/dd/39dfdd9b0d2c3e621f97ce3c31d1ab07.png',
+                'https://i.pinimg.com/originals/06/80/56/068056c4c410baaf11fc953d0f63c601.png'
+            ];
+            
+            // Crear 40 corazones
+            for (let i = 0; i < 40; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-confetti';
+                heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.animationDelay = (Math.random() * 2) + 's';
+                
+                document.body.appendChild(heart);
+            }
+            
+            // Crear 15 Hello Kitty
+            for (let i = 0; i < 15; i++) {
+                const kitty = document.createElement('div');
+                kitty.className = 'kitty-confetti';
+                kitty.style.backgroundImage = `url('${kittyImages[Math.floor(Math.random() * kittyImages.length)]}')`;
+                kitty.style.left = Math.random() * 100 + 'vw';
+                kitty.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                kitty.style.animationDelay = (Math.random() * 2) + 's';
+                
+                document.body.appendChild(kitty);
+            }
+            
+            // Eliminar los elementos después de 8 segundos
+            confettiTimeout = setTimeout(() => {
+                document.querySelectorAll('.heart-confetti, .kitty-confetti').forEach(element => {
+                    element.remove();
+                });
+            }, 8000);
+        }
+
+        // Inicializar el calendario cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar el script de datos del calendario
+            if (typeof getSpecialNote !== 'function') {
+                console.error("La función getSpecialNote no está disponible. Asegúrate de que calendar_data.js esté cargado correctamente.");
+            } else {
+                // Configurar los botones de navegación del calendario
+                document.getElementById('prevMonth').addEventListener('click', function() {
+                    changeMonth(-1);
+                });
+                
+                document.getElementById('nextMonth').addEventListener('click', function() {
+                    changeMonth(1);
+                });
+                
+                // Renderizar el calendario inicial
+                renderCalendar();
+            }
+            
+            // Iniciar el reloj kawaii
+            updateKawaiiClock();
+            
+            // Crear corazones flotantes
+            createFloatingHearts();
+        });
+        
+        // Función para actualizar el reloj kawaii
+        function updateKawaiiClock() {
+            const clockElement = document.getElementById('kawaii-clock');
+            if (!clockElement) return;
+            
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            // Convertir a formato 12 horas
+            hours = hours % 12;
+            hours = hours ? hours : 12; // La hora '0' debe ser '12'
+            
+            // Actualizar el reloj con emojis kawaii
+            clockElement.innerHTML = `${hours}:${minutes}:${seconds} ${ampm} <span style="font-size: 0.8em;">✨</span>`;
+            
+            // Llamar a esta función cada segundo
+            setTimeout(updateKawaiiClock, 1000);
+        }
+    </script>
+</body>
+</html>

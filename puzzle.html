@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puzzle de Amor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --primary: #ff69b4;
+      --primary-light: #ff8da1;
+      --primary-dark: #ff1493;
+      --accent: #ff1493;
+      --text: #333333;
+      --background: #fff0f5;
+      --white: #ffffff;
+      --shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, var(--background), var(--white));
+      color: var(--text);
+      text-align: center;
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding-bottom: 30px;
+    }
+    
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      padding: 15px 0;
+      color: var(--white);
+      font-size: 28px;
+      font-family: 'Pacifico', cursive;
+      letter-spacing: 2px;
+      box-shadow: var(--shadow);
+      z-index: 1000;
+    }
+    
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 80px auto 0;
+      padding: 20px;
+    }
+    
+    /* Level Selection */
+    .level-selection {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px auto;
+      max-width: 800px;
+    }
+    
+    .level-card {
+      width: 150px;
+      height: 150px;
+      border-radius: 15px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+    
+    .level-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
+    }
+    
+    .level-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+    }
+    
+    .level-card.locked::after {
+      content: '🔒';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      color: var(--white);
+    }
+    
+    .level-card .level-number {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      color: var(--white);
+      font-size: 18px;
+      font-weight: bold;
+    }
+    
+    .level-card .level-stars {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      right: 0;
+      color: gold;
+      font-size: 16px;
+    }
+    
+    /* Game Area */
+    .game-area {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px auto;
+    }
+    
+    .game-info {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+    
+    .level-info {
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-family: 'Dancing Script', cursive;
+      animation: pulse 2s infinite;
+    }
+    
+    .moves-timer {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .moves, .timer {
+      background: var(--white);
+      padding: 8px 15px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      font-weight: bold;
+    }
+    
+    /* Puzzle Grid */
+    .puzzle-container {
+      position: relative;
+      margin: 0 auto;
+      width: 300px;
+      height: 300px;
+      max-width: 90vmin;
+      max-height: 90vmin;
+    }
+    
+    .puzzle {
+      display: grid;
+      gap: 4px;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow);
+    }
+    
+    .puzzle-piece {
+      background-size: cover;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(255, 105, 180, 0.15);
+      position: relative;
+    }
+    
+    .puzzle-piece:hover {
+      transform: scale(1.02);
+      box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+    }
+    
+    .puzzle-piece.empty {
+      background: transparent !important;
+      box-shadow: none;
+    }
+    
+    /* Preview Image */
+    .preview-container {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin: 20px auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    
+    .preview-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin: 20px auto;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      border: none;
+      border-radius: 25px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+    }
+    
+    .btn:active {
+      transform: translateY(-1px);
+    }
+    
+    .btn-back {
+      background: linear-gradient(135deg, #888, #666);
+    }
+    
+    /* Level Complete Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    
+    .modal-content {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 90%;
+      width: 500px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5);
+      position: relative;
+    }
+    
+    .modal-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: var(--primary-dark);
+      margin-bottom: 20px;
+    }
+    
+    .modal-body {
+      margin-bottom: 25px;
+    }
+    
+    .stars-container {
+      margin: 20px 0;
+      font-size: 40px;
+      color: gold;
+      animation: bounce 1s ease infinite alternate;
+    }
+    
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Floating Hearts */
+    .floating-hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .floating-heart {
+      position: absolute;
+      color: var(--primary);
+      opacity: 0.2;
+      animation: float-heart 15s linear infinite;
+    }
+    
+    @keyframes float-heart {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.2;
+      }
+      90% {
+        opacity: 0.2;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Confetti Animation */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #f2d74e;
+      opacity: 0;
+      z-index: 1000;
+      animation: confetti-fall 5s ease-out forwards;
+    }
+    
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Loading Animation */
+    .loading {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 20px auto;
+    }
+    
+    .loading div {
+      position: absolute;
+      top: 33px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--primary);
+      animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+    
+    .loading div:nth-child(1) {
+      left: 8px;
+      animation: loading1 0.6s infinite;
+    }
+    
+    .loading div:nth-child(2) {
+      left: 8px;
+      animation: loading2 0.6s infinite;
+    }
+    
+    .loading div:nth-child(3) {
+      left: 32px;
+      animation: loading2 0.6s infinite;
+    }
+    
+    .loading div:nth-child(4) {
+      left: 56px;
+      animation: loading3 0.6s infinite;
+    }
+    
+    @keyframes loading1 {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes loading2 {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(24px, 0); }
+    }
+    
+    @keyframes loading3 {
+      0% { transform: scale(1); }
+      100% { transform: scale(0); }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header {
+        font-size: 22px;
+        padding: 12px 0;
+      }
+      
+      .level-card {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .preview-container {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .modal-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header animate__animated animate__fadeIn">
+    <i class="bi bi-puzzle-fill"></i> Puzzle de Amor <i class="bi bi-heart-fill"></i>
+  </div>
+  
+  <div class="container">
+    <!-- Level Selection Screen -->
+    <div id="levelSelection" class="level-selection animate__animated animate__fadeIn">
+      <!-- Levels will be generated by JavaScript -->
+      <div class="loading">
+        <div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+    
+    <!-- Game Area -->
+    <div id="gameArea" class="game-area">
+      <div class="game-info">
+        <div id="levelInfo" class="level-info"></div>
+        <div class="moves-timer">
+          <div id="moves" class="moves">Movimientos: 0</div>
+          <div id="timer" class="timer">Tiempo: 00:00</div>
+        </div>
+      </div>
+      
+      <div class="preview-container">
+        <img id="previewImage" class="preview-image" src="" alt="Imagen objetivo">
+      </div>
+      
+      <div class="puzzle-container">
+        <div id="puzzle" class="puzzle"></div>
+      </div>
+      
+      <div class="controls">
+        <button id="shuffleBtn" class="btn">
+          <i class="bi bi-shuffle"></i> Mezclar
+        </button>
+        <button id="hintBtn" class="btn">
+          <i class="bi bi-lightbulb"></i> Pista
+        </button>
+        <button id="backToLevelsBtn" class="btn btn-back">
+          <i class="bi bi-arrow-left"></i> Volver
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Level Complete Modal -->
+  <div id="levelCompleteModal" class="modal-overlay">
+    <div class="modal-content animate__animated animate__zoomIn">
+      <div class="modal-title">¡Nivel Completado!</div>
+      <div class="modal-body">
+        <p>¡Felicidades! Has completado el nivel <span id="completedLevel">1</span></p>
+        <div class="stats">
+          <p>Movimientos: <span id="statMoves">0</span></p>
+          <p>Tiempo: <span id="statTime">00:00</span></p>
+        </div>
+        <div id="starsEarned" class="stars-container">
+          ⭐⭐⭐
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button id="nextLevelBtn" class="btn">
+          <i class="bi bi-arrow-right-circle"></i> Siguiente Nivel
+        </button>
+        <button id="replayLevelBtn" class="btn">
+          <i class="bi bi-arrow-repeat"></i> Jugar de Nuevo
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Floating Hearts Background -->
+  <div id="floatingHeartsContainer" class="floating-hearts-container"></div>
+  
+  <a href="index.html" class="btn" style="margin-top: 20px; display: inline-block;">
+    <i class="bi bi-house-heart"></i> Volver al Inicio
+  </a>
+  
+  <script>
+    // Crear corazones flotantes
+    function createFloatingHearts() {
+      const heartsContainer = document.createElement('div');
+      heartsContainer.classList.add('floating-hearts-container');
+      document.body.appendChild(heartsContainer);
+      
+      const numberOfHearts = 15;
+      
+      for (let i = 0; i < numberOfHearts; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        
+        // Posición aleatoria
+        const left = Math.random() * 100;
+        const size = Math.random() * 15 + 10;
+        const animationDuration = Math.random() * 10 + 10;
+        const delay = Math.random() * 10;
+        
+        heart.innerHTML = '❤️';
+        heart.style.left = `${left}%`;
+        heart.style.fontSize = `${size}px`;
+        heart.style.animationDuration = `${animationDuration}s`;
+        heart.style.animationDelay = `${delay}s`;
+        
+        heartsContainer.appendChild(heart);
+      }
+    }
+    
+    // Iniciar corazones flotantes
+    createFloatingHearts();
+    
+    // Definición de niveles con imágenes locales y de respaldo
+    const levels = [
+      {
+        id: 1,
+        // Usar múltiples fuentes para mayor confiabilidad
+        img: 'https://i.ibb.co/mrwfyv3K/IMG-20241119-WA0018.jpg',
+        backupImg: 'https://i.imgur.com/JZjKrJu.jpg',
+        size: 2,
+        name: 'Corazones',
+        difficulty: 'Muy Fácil'
+      },
+      {
+        id: 2,
+        img: 'https://i.ibb.co/93b8WdrG/AGC-20250214-173850853.jpg',
+        backupImg: 'https://i.ibb.co/93b8WdrG/AGC-20250214-173850853.jpg',
+        size: 2,
+        name: 'Amor Dulce',
+        difficulty: 'Muy Fácil'
+      },
+      {
+        id: 3,
+        img: 'https://i.ibb.co/vv3z1HxL/AGC-20250214-191359478.jpg',
+        backupImg: 'https://i.ibb.co/vv3z1HxL/AGC-20250214-191359478.jpg',
+        size: 3,
+        name: 'Atardecer Romántico',
+        difficulty: 'Fácil'
+      },
+      {
+        id: 4,
+        img: 'https://i.ibb.co/WWnXMDGc/IMG-20241107-WA0004.jpg',
+        backupImg: 'https://i.ibb.co/WWnXMDGc/IMG-20241107-WA0004.jpg',
+        size: 3,
+        name: 'Flores de Amor',
+        difficulty: 'Fácil'
+      },
+      {
+        id: 5,
+        img: 'https://i.ibb.co/PvVLRvRq/IMG-20241016-231244-733.jpg',
+        backupImg: 'https://i.ibb.co/PvVLRvRq/IMG-20241016-231244-733.jpg',
+        size: 4,
+        name: 'Amor Eterno',
+        difficulty: 'Medio'
+      }
+    ];
+    
+    // Variables del juego
+    let currentLevel = 0;
+    let moves = 0;
+    let timerInterval;
+    let startTime;
+    let puzzleSize;
+    let emptyTile;
+    let puzzleState = [];
+    let solvedState = [];
+    let hintTimeout;
+    let imagesLoaded = 0;
+    let totalImages = levels.length;
+    
+    // Elementos DOM
+    const levelSelection = document.getElementById('levelSelection');
+    const gameArea = document.getElementById('gameArea');
+    const levelInfo = document.getElementById('levelInfo');
+    const puzzleContainer = document.getElementById('puzzle');
+    const previewImage = document.getElementById('previewImage');
+    const movesElement = document.getElementById('moves');
+    const timerElement = document.getElementById('timer');
+    const shuffleBtn = document.getElementById('shuffleBtn');
+    const hintBtn = document.getElementById('hintBtn');
+    const backToLevelsBtn = document.getElementById('backToLevelsBtn');
+    const levelCompleteModal = document.getElementById('levelCompleteModal');
+    const completedLevelElement = document.getElementById('completedLevel');
+    const statMovesElement = document.getElementById('statMoves');
+    const statTimeElement = document.getElementById('statTime');
+    const starsEarnedElement = document.getElementById('starsEarned');
+    const nextLevelBtn = document.getElementById('nextLevelBtn');
+    const replayLevelBtn = document.getElementById('replayLevelBtn');
+    
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', init);
+    
+    function init() {
+      console.log('Inicializando juego de puzzles...');
+      
+      // Precargar imágenes
+      preloadImages();
+      
+      // Event listeners
+      shuffleBtn.addEventListener('click', shufflePuzzle);
+      hintBtn.addEventListener('click', showHint);
+      backToLevelsBtn.addEventListener('click', backToLevels);
+      nextLevelBtn.addEventListener('click', startNextLevel);
+      replayLevelBtn.addEventListener('click', replayLevel);
+    }
+    
+    // Precargar imágenes
+    function preloadImages() {
+      console.log('Precargando imágenes...');
+      levels.forEach((level, index) => {
+        const img = new Image();
+        img.onload = () => {
+          console.log(`Imagen ${index + 1} cargada correctamente`);
+          level.loadedImg = level.img;
+          imagesLoaded++;
+          if (imagesLoaded === totalImages) {
+            initGame();
+          }
+        };
+        img.onerror = () => {
+          console.log(`Error al cargar imagen ${index + 1}, intentando con respaldo`);
+          const backupImg = new Image();
+          backupImg.onload = () => {
+            console.log(`Imagen de respaldo ${index + 1} cargada correctamente`);
+            level.loadedImg = level.backupImg;
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) {
+              initGame();
+            }
+          };
+          backupImg.onerror = () => {
+            console.log(`Error al cargar imagen de respaldo ${index + 1}, usando imagen genérica`);
+            level.loadedImg = `https://via.placeholder.com/300x300/ff69b4/ffffff?text=Nivel+${level.id}`;
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) {
+              initGame();
+            }
+          };
+          backupImg.src = level.backupImg;
+        };
+        img.src = level.img;
+      });
+      
+      // Por si hay algún problema con la carga de imágenes, iniciar el juego después de 5 segundos
+      setTimeout(() => {
+        if (imagesLoaded < totalImages) {
+          console.log('Tiempo de espera agotado, iniciando juego con las imágenes disponibles');
+          initGame();
+        }
+      }, 5000);
+    }
+    
+    // Iniciar juego después de cargar imágenes
+    function initGame() {
+      console.log('Todas las imágenes cargadas, iniciando juego');
+      loadProgress();
+      renderLevelSelection();
+      
+      // Ocultar el indicador de carga
+      const loadingIndicator = document.querySelector('.loading');
+      if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+      }
+    }
+    
+    // Cargar progreso guardado
+    function loadProgress() {
+      console.log('Cargando progreso guardado...');
+      const savedProgress = localStorage.getItem('puzzleProgress');
+      if (savedProgress) {
+        try {
+          const progress = JSON.parse(savedProgress);
+          levels.forEach((level, index) => {
+            if (progress[index]) {
+              level.unlocked = true;
+              level.stars = progress[index].stars;
+              level.bestMoves = progress[index].moves;
+              level.bestTime = progress[index].time;
+            }
+          });
+          console.log('Progreso cargado correctamente');
+        } catch (e) {
+          console.error('Error al cargar el progreso:', e);
+        }
+      } else {
+        console.log('No se encontró progreso guardado');
+      }
+      
+      // Asegurarse de que el primer nivel esté desbloqueado
+      levels[0].unlocked = true;
+    }
+    
+    // Guardar progreso
+    function saveProgress() {
+      console.log('Guardando progreso...');
+      const progress = {};
+      levels.forEach((level, index) => {
+        if (level.unlocked) {
+          progress[index] = {
+            stars: level.stars || 0,
+            moves: level.bestMoves,
+            time: level.bestTime
+          };
+        }
+      });
+      localStorage.setItem('puzzleProgress', JSON.stringify(progress));
+      console.log('Progreso guardado correctamente');
+    }
+    
+    // Renderizar selección de niveles
+    function renderLevelSelection() {
+      console.log('Renderizando selección de niveles...');
+      levelSelection.innerHTML = '';
+      
+      levels.forEach((level, index) => {
+        const levelCard = document.createElement('div');
+        levelCard.className = `level-card ${!level.unlocked ? 'locked' : ''}`;
+        levelCard.style.backgroundImage = `url(${level.loadedImg})`;
+        
+        const levelNumber = document.createElement('div');
+        levelNumber.className = 'level-number';
+        levelNumber.textContent = `Nivel ${level.id}`;
+        
+        const levelStars = document.createElement('div');
+        levelStars.className = 'level-stars';
+        levelStars.innerHTML = level.stars ? '⭐'.repeat(level.stars) : '';
+        
+        levelCard.appendChild(levelNumber);
+        levelCard.appendChild(levelStars);
+        
+        if (level.unlocked) {
+          levelCard.addEventListener('click', () => startLevel(index));
+        }
+        
+        levelSelection.appendChild(levelCard);
+      });
+      
+      // Mostrar la selección de niveles
+      levelSelection.style.display = 'flex';
+      console.log('Selección de niveles renderizada');
+    }
+    
+    // Iniciar un nivel
+    function startLevel(levelIndex) {
+      console.log(`Iniciando nivel ${levelIndex + 1}...`);
+      currentLevel = levelIndex;
+      const level = levels[currentLevel];
+      puzzleSize = level.size;
+      
+      // Mostrar área de juego
+      levelSelection.style.display = 'none';
+      gameArea.style.display = 'flex';
+      
+      // Actualizar información del nivel
+      levelInfo.textContent = `Nivel ${level.id}: ${level.name}`;
+      previewImage.src = level.loadedImg;
+      
+      // Reiniciar contadores
+      moves = 0;
+      movesElement.textContent = `Movimientos: ${moves}`;
+      startTimer();
+      
+      // Crear y mezclar el puzzle
+      createPuzzle();
+      shufflePuzzle();
+      
+      console.log(`Nivel ${levelIndex + 1} iniciado`);
+    }
+    
+    // Crear el puzzle
+    function createPuzzle() {
+      console.log('Creando puzzle...');
+      const level = levels[currentLevel];
+      const totalTiles = puzzleSize * puzzleSize;
+      
+      // Configurar el grid
+      puzzleContainer.style.gridTemplateColumns = `repeat(${puzzleSize}, 1fr)`;
+      puzzleContainer.style.gridTemplateRows = `repeat(${puzzleSize}, 1fr)`;
+      puzzleContainer.innerHTML = '';
+      
+      // Crear estado resuelto
+      solvedState = Array.from({ length: totalTiles }, (_, i) => i);
+      
+      // Crear piezas
+      for (let i = 0; i < totalTiles; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'puzzle-piece';
+        
+        if (i === totalTiles - 1) {
+          piece.classList.add('empty');
+          emptyTile = i;
+        } else {
+          const row = Math.floor(i / puzzleSize);
+          const col = i % puzzleSize;
+          
+          piece.style.backgroundImage = `url(${level.loadedImg})`;
+          piece.style.backgroundSize = `${puzzleSize * 100}%`;
+          piece.style.backgroundPosition = `${col * 100 / (puzzleSize - 1)}% ${row * 100 / (puzzleSize - 1)}%`;
+        }
+        
+        piece.dataset.index = i;
+        piece.addEventListener('click', () => movePiece(i));
+        puzzleContainer.appendChild(piece);
+      }
+      
+      // Inicializar estado del puzzle
+      puzzleState = [...solvedState];
+      console.log('Puzzle creado');
+    }
+    
+    // Mezclar el puzzle
+    function shufflePuzzle() {
+      console.log('Mezclando puzzle...');
+      // Realizar movimientos aleatorios
+      const shuffleMoves = puzzleSize * puzzleSize * 5;
+      for (let i = 0; i < shuffleMoves; i++) {
+        const adjacentTiles = getAdjacentTiles(emptyTile);
+        const randomTile = adjacentTiles[Math.floor(Math.random() * adjacentTiles.length)];
+        swapTiles(randomTile, emptyTile);
+        emptyTile = randomTile;
+      }
+      
+      // Asegurarse de que el puzzle sea resoluble
+      if (!isSolvable()) {
+        console.log('Puzzle no resoluble, ajustando...');
+        // Si no es resoluble, intercambiar dos piezas para hacerlo resoluble
+        const nonEmptyIndices = [];
+        for (let i = 0; i < puzzleState.length; i++) {
+          if (puzzleState[i] !== puzzleSize * puzzleSize - 1) {
+            nonEmptyIndices.push(i);
+          }
+        }
+        
+        if (nonEmptyIndices.length >= 2) {
+          const idx1 = nonEmptyIndices[0];
+          const idx2 = nonEmptyIndices[1];
+          swapTiles(idx1, idx2);
+        }
+      }
+      
+      // Reiniciar contadores
+      moves = 0;
+      movesElement.textContent = `Movimientos: ${moves}`;
+      startTimer();
+      
+      updatePuzzleDisplay();
+      console.log('Puzzle mezclado');
+      
+      // Mostrar pista automática al inicio para ayudar
+      setTimeout(showHint, 1000);
+    }
+    
+    // Verificar si el puzzle es resoluble
+    function isSolvable() {
+      // Para puzzles de tamaño impar, el número de inversiones debe ser par
+      // Para puzzles de tamaño par, el número de inversiones + la fila de la casilla vacía debe ser impar
+      const inversions = countInversions();
+      
+      if (puzzleSize % 2 === 1) {
+        return inversions % 2 === 0;
+      } else {
+        const emptyRow = Math.floor(puzzleState.indexOf(puzzleSize * puzzleSize - 1) / puzzleSize);
+        return (inversions + emptyRow) % 2 === 1;
+      }
+    }
+    
+    // Contar inversiones en el estado actual
+    function countInversions() {
+      let inversions = 0;
+      const totalTiles = puzzleSize * puzzleSize;
+      const emptyValue = totalTiles - 1;
+      
+      for (let i = 0; i < totalTiles - 1; i++) {
+        for (let j = i + 1; j < totalTiles; j++) {
+          if (puzzleState[i] !== emptyValue && 
+              puzzleState[j] !== emptyValue && 
+              puzzleState[i] > puzzleState[j]) {
+            inversions++;
+          }
+        }
+      }
+      
+      return inversions;
+    }
+    
+    // Obtener casillas adyacentes a una posición
+    function getAdjacentTiles(position) {
+      const row = Math.floor(position / puzzleSize);
+      const col = position % puzzleSize;
+      const adjacent = [];
+      
+      // Arriba
+      if (row > 0) adjacent.push(position - puzzleSize);
+      // Abajo
+      if (row < puzzleSize - 1) adjacent.push(position + puzzleSize);
+      // Izquierda
+      if (col > 0) adjacent.push(position - 1);
+      // Derecha
+      if (col < puzzleSize - 1) adjacent.push(position + 1);
+      
+      return adjacent;
+    }
+    
+    // Mover una pieza
+    function movePiece(position) {
+      const adjacentTiles = getAdjacentTiles(position);
+      
+      if (adjacentTiles.includes(emptyTile)) {
+        swapTiles(position, emptyTile);
+        emptyTile = position;
+        moves++;
+        movesElement.textContent = `Movimientos: ${moves}`;
+        
+        updatePuzzleDisplay();
+        
+        // Verificar si el puzzle está resuelto
+        if (isPuzzleSolved()) {
+          setTimeout(levelComplete, 500);
+        }
+      }
+    }
+    
+    // Intercambiar dos casillas
+    function swapTiles(pos1, pos2) {
+      [puzzleState[pos1], puzzleState[pos2]] = [puzzleState[pos2], puzzleState[pos1]];
+    }
+    
+    // Actualizar la visualización del puzzle
+    function updatePuzzleDisplay() {
+      const pieces = puzzleContainer.querySelectorAll('.puzzle-piece');
+      
+      pieces.forEach((piece, position) => {
+        const value = puzzleState[position];
+        const row = Math.floor(value / puzzleSize);
+        const col = value % puzzleSize;
+        
+        if (value === puzzleSize * puzzleSize - 1) {
+          piece.classList.add('empty');
+          piece.style.backgroundImage = 'none';
+        } else {
+          piece.classList.remove('empty');
+          piece.style.backgroundImage = `url(${levels[currentLevel].loadedImg})`;
+          piece.style.backgroundSize = `${puzzleSize * 100}%`;
+          piece.style.backgroundPosition = `${col * 100 / (puzzleSize - 1)}% ${row * 100 / (puzzleSize - 1)}%`;
+        }
+      });
+    }
+    
+    // Verificar si el puzzle está resuelto
+    function isPuzzleSolved() {
+      return puzzleState.every((value, index) => value === solvedState[index]);
+    }
+    
+    // Mostrar pista
+    function showHint() {
+      console.log('Mostrando pista...');
+      const pieces = puzzleContainer.querySelectorAll('.puzzle-piece');
+      
+      // Resaltar todas las piezas correctamente colocadas
+      pieces.forEach((piece, position) => {
+        if (puzzleState[position] === position) {
+          piece.classList.add('animate__animated', 'animate__pulse');
+          // Añadir un borde verde para indicar que está en la posición correcta
+          piece.style.border = '2px solid #00ff00';
+        } else {
+          // Quitar el borde verde si no está en la posición correcta
+          piece.style.border = 'none';
+        }
+      });
+      
+      // Mostrar un mensaje de ayuda
+      const helpMessage = document.createElement('div');
+      helpMessage.textContent = '¡Las piezas que brillan están en la posición correcta mi bubu!';
+      helpMessage.style.color = '#ff1493';
+      helpMessage.style.fontWeight = 'bold';
+      helpMessage.style.margin = '10px 0';
+      helpMessage.style.padding = '5px';
+      helpMessage.style.borderRadius = '5px';
+      helpMessage.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+      
+      // Añadir el mensaje después del contenedor del puzzle
+      const existingMessage = document.querySelector('.hint-message');
+      if (existingMessage) {
+        existingMessage.remove();
+      }
+      
+      helpMessage.classList.add('hint-message');
+      puzzleContainer.parentNode.insertBefore(helpMessage, puzzleContainer.nextSibling);
+      
+      clearTimeout(hintTimeout);
+      hintTimeout = setTimeout(() => {
+        pieces.forEach(piece => {
+          piece.classList.remove('animate__animated', 'animate__pulse');
+          // Mantener el borde verde para las piezas correctas
+        });
+        
+        // No eliminar el mensaje de ayuda para que siga visible
+      }, 2000);
+    }
+    
+    // Iniciar temporizador
+    function startTimer() {
+      clearInterval(timerInterval);
+      startTime = Date.now();
+      
+      timerInterval = setInterval(() => {
+        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+        const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+        const seconds = (elapsedTime % 60).toString().padStart(2, '0');
+        
+        timerElement.textContent = `Tiempo: ${minutes}:${seconds}`;
+      }, 1000);
+    }
+    
+    // Detener temporizador
+    function stopTimer() {
+      clearInterval(timerInterval);
+      return Math.floor((Date.now() - startTime) / 1000);
+    }
+    
+    // Nivel completado
+    function levelComplete() {
+      console.log('¡Nivel completado!');
+      const elapsedTime = stopTimer();
+      const level = levels[currentLevel];
+      
+      // Calcular estrellas basadas en movimientos y tiempo
+      const minMoves = puzzleSize * puzzleSize;
+      let stars = 3;
+      
+      if (moves > minMoves * 3) stars = 2;
+      if (moves > minMoves * 5) stars = 1;
+      
+      console.log(`Nivel completado con ${stars} estrellas, ${moves} movimientos, en ${elapsedTime} segundos`);
+      
+      // Actualizar mejor puntuación
+      if (!level.bestMoves || moves < level.bestMoves) {
+        level.bestMoves = moves;
+      }
+      
+      if (!level.bestTime || elapsedTime < level.bestTime) {
+        level.bestTime = elapsedTime;
+      }
+      
+      // Guardar estrellas si es mejor que la anterior
+      if (!level.stars || stars > level.stars) {
+        level.stars = stars;
+      }
+      
+      // Desbloquear siguiente nivel y también el siguiente para facilitar progreso
+      if (currentLevel < levels.length - 1) {
+        levels[currentLevel + 1].unlocked = true;
+        
+        // Desbloquear también el siguiente nivel para facilitar el progreso
+        if (currentLevel < levels.length - 2) {
+          levels[currentLevel + 2].unlocked = true;
+        }
+      }
+      
+      // Guardar progreso
+      saveProgress();
+      
+      // Mostrar modal de nivel completado
+      completedLevelElement.textContent = level.id;
+      statMovesElement.textContent = moves;
+      
+      const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+      const seconds = (elapsedTime % 60).toString().padStart(2, '0');
+      statTimeElement.textContent = `${minutes}:${seconds}`;
+      
+      starsEarnedElement.innerHTML = '⭐'.repeat(stars);
+      
+      // Añadir un mensaje especial de amor
+      const loveMessages = [
+        "¡Eres increíble mi amor! ❤️",
+        "¡Lo hiciste genial, preciosa! 💕",
+        "¡Eres la mejor jugadora del mundo! 😘",
+        "¡Te amo! Eres maravillosa 💖",
+        "¡Felicidades mi vida! Eres fantástica 💓"
+      ];
+      
+      const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+      const messageElement = document.createElement('p');
+      messageElement.textContent = randomMessage;
+      messageElement.style.fontSize = '1.2rem';
+      messageElement.style.color = '#ff1493';
+      messageElement.style.fontWeight = 'bold';
+      messageElement.style.marginTop = '10px';
+      
+      const modalBody = document.querySelector('.modal-body');
+      // Eliminar mensaje anterior si existe
+      const existingMessage = modalBody.querySelector('.love-message');
+      if (existingMessage) {
+        existingMessage.remove();
+      }
+      
+      messageElement.classList.add('love-message');
+      modalBody.appendChild(messageElement);
+      
+      // Crear confeti
+      createConfetti();
+      
+      // Mostrar modal
+      levelCompleteModal.style.display = 'flex';
+      
+      // Animar entrada del modal
+      const modalContent = levelCompleteModal.querySelector('.modal-content');
+      modalContent.classList.remove('animate__zoomIn');
+      void modalContent.offsetWidth; // Forzar reflow
+      modalContent.classList.add('animate__zoomIn');
+    }
+    
+    // Crear confeti para celebración
+    function createConfetti() {
+      console.log('Creando confeti...');
+      const colors = ['#ff69b4', '#ff8da1', '#ffd1dc', '#ffe4e1', '#fff5f7', '#ffe4e8'];
+      
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.width = `${Math.random() * 10 + 5}px`;
+        confetti.style.height = `${Math.random() * 10 + 5}px`;
+        confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+        
+        document.body.appendChild(confetti);
+        
+        // Eliminar confeti después de la animación
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+    
+    // Iniciar siguiente nivel
+    function startNextLevel() {
+      console.log('Iniciando siguiente nivel...');
+      levelCompleteModal.style.display = 'none';
+      
+      if (currentLevel < levels.length - 1) {
+        startLevel(currentLevel + 1);
+      } else {
+        // Si es el último nivel, volver a la selección
+        backToLevels();
+      }
+    }
+    
+    // Repetir nivel actual
+    function replayLevel() {
+      console.log('Reiniciando nivel actual...');
+      levelCompleteModal.style.display = 'none';
+      startLevel(currentLevel);
+    }
+    
+    // Volver a la selección de niveles
+    function backToLevels() {
+      console.log('Volviendo a la selección de niveles...');
+      stopTimer();
+      gameArea.style.display = 'none';
+      levelSelection.style.display = 'flex';
+    }
+  </script>
+</body>
+</html>

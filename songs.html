@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te la dedique porque</title>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fff0f5, #ffe4e8);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 a20,20 0 0,1 40,0 a20,20 0 0,1 -40,0 z M50,30 a20,20 0 0,1 0,40 a20,20 0 0,1 0,-40 z" fill="%23ffb6c1" opacity="0.1"/></svg>');
+            background-size: 100px 100px;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+            box-sizing: border-box;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #ff69b4, #ff8da1);
+            color: white;
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before, .header::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .header::before {
+            top: -15px;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .header::after {
+            bottom: -15px;
+            right: 10%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-family: 'Pacifico', cursive;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.95);
+            max-width: 800px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2em;
+        }
+
+        #songList {
+            margin-top: 120px;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .song-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: calc(100% - 40px);
+            padding: 20px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .song-container {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+            border: 3px solid transparent;
+            background-image: linear-gradient(white, white), 
+                              linear-gradient(135deg, #ff69b4, #ff8da1);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+        }
+
+        .song-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.1), rgba(255, 141, 161, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            border-radius: 17px;
+        }
+
+        .song-container:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.25);
+        }
+
+        .song-container:hover::before {
+            opacity: 1;
+        }
+
+        .song-title {
+            color: #ff1493;
+            margin: 15px 0 5px;
+            font-size: 1.3em;
+            font-weight: 600;
+            font-family: 'Quicksand', sans-serif;
+            position: relative;
+        }
+
+        .song-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, #ff69b4, #ff8da1);
+            margin: 8px auto 0;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .song-container:hover .song-title::after {
+            width: 60px;
+        }
+
+        .song-cover {
+            width: 180px;
+            height: 180px;
+            margin: 15px auto;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 4px solid white;
+            box-sizing: content-box;
+        }
+
+        .song-cover::before {
+            content: '♫';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: white;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .song-cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 105, 180, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .song-cover:hover::before,
+        .song-cover:hover::after {
+            opacity: 1;
+        }
+
+        .song-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .song-cover:hover img {
+            transform: scale(1.1);
+        }
+
+        @keyframes rotate {
+            from { transform: rotate3d(0, 0, 1, 0deg); }
+            to { transform: rotate3d(0, 0, 1, 360deg); }
+        }
+
+        .vinyl.playing {
+            animation: rotate 3s linear infinite;
+            transform-origin: center;
+            backface-visibility: hidden;
+            will-change: transform;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            padding: 25px;
+            margin: 30px auto;
+            max-height: 85vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal.show {
+            opacity: 1;
+        }
+
+        .modal-main {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .lyrics-toggle-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff8da1);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .lyrics-toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .lyrics-toggle-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .lyrics-container {
+            display: none;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .lyrics-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .lyrics-panel {
+            flex: 1;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: 70vh;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .lyrics-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .lyrics-panel::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .lyrics-panel::-webkit-scrollbar-thumb {
+            background-color: #ff69b4;
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+
+        .lyrics-title {
+            font-size: 1.5em;
+            color: #ff1493;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-weight: 700;
+        }
+
+        .lyrics-text {
+            white-space: pre-line;
+            line-height: 1.8;
+            color: #333;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        .lyrics-highlight {
+            background-color: rgba(255, 105, 180, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            text-shadow: 0 0 2px rgba(255, 20, 147, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .vinyl-container {
+            width: 220px;
+            height: 220px;
+            margin: 15px auto;
+            position: relative;
+        }
+
+        .tonearm {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 30px;
+            background: #333;
+            transform-origin: right center;
+            transform: rotate(25deg);
+            z-index: 10;
+            transition: transform 0.5s ease;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .tonearm::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            background: #222;
+            border-radius: 50%;
+        }
+
+        .tonearm::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 15px;
+            height: 20px;
+            background: linear-gradient(to right, #555, #333);
+            transform: rotate(25deg);
+            border-radius: 2px;
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .vinyl {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .vinyl::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            background: #333;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .vinyl img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .song-details {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .song-details h2 {
+            color: #ff69b4;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        .song-details p {
+            color: #333;
+            line-height: 1.5;
+            font-size: 1.1em;
+            margin: 10px 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: none;
+            background: #ff69b4;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .close-button:hover {
+            background: #ff1493;
+            transform: rotate(90deg);
+        }
+
+        #audioPlayer {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            border-radius: 30px;
+            height: 40px;
+        }
+
+        audio::-webkit-media-controls-panel {
+            background-color: #ffe4e8;
+        }
+
+        audio::-webkit-media-controls-play-button {
+            background-color: #ff69b4;
+            border-radius: 50%;
+        }
+
+        .song-artist {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .song-meaning {
+            background: linear-gradient(135deg, #fff0f5, #ffe4e8);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 1.05em;
+            line-height: 1.6;
+            border-left: 4px solid #ff69b4;
+        }
+
+        .special-moment {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3em;
+            color: #ff1493;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+
+            .vinyl-container {
+                width: 180px;
+                height: 180px;
+            }
+
+            .vinyl {
+                width: 160px;
+                height: 160px;
+            }
+
+            .tonearm {
+                width: 80px;
+                height: 25px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .song-container {
+                padding: 15px;
+            }
+
+            .song-cover {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modal {
+                padding: 10px;
+            }
+
+            .modal-content {
+                flex-direction: column;
+                padding: 15px;
+                margin: 10px auto;
+                max-height: 95vh;
+            }
+
+            .modal-main {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .vinyl-container {
+                width: 150px;
+                height: 150px;
+                margin: 10px auto;
+            }
+
+            .vinyl {
+                width: 130px;
+                height: 130px;
+            }
+
+            .tonearm {
+                width: 60px;
+                height: 20px;
+                top: 10px;
+                right: 10px;
+            }
+
+            .song-details h2 {
+                font-size: 1.4em;
+            }
+
+            .song-details p {
+                font-size: 1em;
+            }
+
+            .lyrics-panel {
+                height: 50vh;
+                padding: 15px;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                margin-top: 15px;
+            }
+
+            .lyrics-text {
+                font-size: 1em;
+                line-height: 1.6;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            #audioPlayer {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        .song-details h2 {
+            font-size: 1.3em;
+        }
+
+        .song-details p {
+            font-size: 1em;
+        }
+
+        .close-button {
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 20px;
+            opacity: 0.3;
+            animation: float-heart 15s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes float-heart {
+            0% { 
+                transform: translateY(100vh) rotate(0deg); 
+                opacity: 0;
+            }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { 
+                transform: translateY(-100px) rotate(360deg); 
+                opacity: 0;
+            }
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 30px 0;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #ff69b4, #ff8da1);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .back-button:active {
+            transform: translateY(-1px);
+        }
+
+        .note-icon {
+            display: inline-block;
+            animation: bounce 2s ease infinite;
+            margin: 0 5px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .footer-message {
+            font-family: 'Dancing Script', cursive;
+            color: #ff1493;
+            font-size: 1.5em;
+            text-align: center;
+            margin: 20px 0 40px;
+            text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHeartsContainer"></div>
+    
+    <div class="header">
+        <h1><span class="note-icon">♪</span> Te la dediqué porque... <span class="note-icon">♫</span></h1>
+        <p>Cada canción cuenta una parte de nuestra historia de amor</p>
+    </div>
+
+    <div id="songList" class="song-list"></div>
+
+    <div id="songModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="vinyl-container">
+                    <div class="tonearm"></div>
+                    <div class="vinyl">
+                        <img id="modalCover" src="" alt="Portada de la canción">
+                    </div>
+                </div>
+                <h2 id="modalTitle" class="song-title"></h2>
+                <p id="modalArtist" class="song-artist"></p>
+                <p id="modalMeaning" class="song-meaning"></p>
+                <p id="modalSpecialMoment" class="special-moment"></p>
+                <audio id="audioPlayer" controls></audio>
+                <button class="lyrics-toggle-btn">Mostrar Letra</button>
+                <div class="lyrics-container">
+                    <h3 class="lyrics-title">Letra de la Canción</h3>
+                    <div class="lyrics-text" id="lyricsText"></div>
+                </div>
+            </div>
+            <button class="close-button">×</button>
+        </div>
+    </div>
+
+    <div class="footer-message">
+        Cada canción es un pedacito de mi corazón para ti ❤️
+    </div>
+    
+    <a href="index.html" class="back-button">Volver al Inicio</a>
+
+    <script src="songs_data.js"></script>
+    <script src="lyrics.js"></script>
+    <script src="player.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const songList = document.getElementById('songList');
+            const modal = document.getElementById('songModal');
+            const closeButton = modal.querySelector('.close-button');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const lyricsContainer = document.querySelector('.lyrics-container');
+            const lyricsToggleBtn = document.querySelector('.lyrics-toggle-btn');
+            const lyricsText = document.getElementById('lyricsText');
+
+            // Crear corazones flotantes
+            createFloatingHearts();
+
+            // Cargar canciones
+            const songs = getAllSongs();
+            songs.forEach((song, index) => {
+                const songContainer = document.createElement('div');
+                songContainer.className = 'song-container animate__animated animate__fadeIn';
+                songContainer.style.animationDelay = `${index * 0.1}s`;
+                songContainer.innerHTML = `
+                    <div class="song-cover">
+                        <img src="${song.coverImage}" alt="${song.title}" onerror="this.src='https://via.placeholder.com/180x180?text=No+Image'">
+                    </div>
+                    <h3 class="song-title">${song.title}</h3>
+                    <p class="song-artist">${song.artist || ''}</p>
+                `;
+                songContainer.addEventListener('click', () => openModal(song));
+                songList.appendChild(songContainer);
+            });
+
+            // Cerrar modal
+            closeButton.addEventListener('click', () => {
+                modal.style.opacity = '0';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                    pauseSong();
+                }, 300);
+            });
+
+            // Configurar botón de mostrar/ocultar letra
+            lyricsToggleBtn.addEventListener('click', () => {
+                const isVisible = lyricsContainer.classList.contains('show');
+                if (isVisible) {
+                    lyricsContainer.classList.remove('show');
+                    lyricsToggleBtn.textContent = 'Mostrar Letra';
+                } else {
+                    lyricsContainer.classList.add('show');
+                    lyricsToggleBtn.textContent = 'Ocultar Letra';
+                }
+            });
+
+            // Función para abrir el modal
+            window.openModal = function(song) {
+                const modal = document.getElementById('songModal');
+                modal.style.display = 'flex';
+                document.body.classList.add('modal-open');
+                
+                // Asegurarse de que el modal esté visible antes de cargar la canción
+                setTimeout(() => {
+                    modal.classList.add('show');
+                    modal.style.opacity = '1';
+                    loadAndPlaySong(song);
+                }, 10);
+            };
+
+            // Función para pausar la canción
+            window.pauseSong = function() {
+                audioPlayer.pause();
+            };
+        });
+
+        // Crear corazones flotantes
+        function createFloatingHearts() {
+            const symbols = ['❤️', '💕', '💖', '💘', '💗', '💓', '💞'];
+            const container = document.getElementById('floatingHeartsContainer');
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                    heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                    heart.style.opacity = Math.random() * 0.3 + 0.1;
+                    
+                    container.appendChild(heart);
+                    
+                    // Eliminar el corazón después de que termine la animación
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 15000);
+                }, i * 800);
+            }
+            
+            // Continuar creando corazones
+            setTimeout(createFloatingHearts, 15000);
+        }
+    </script>
+</body>
+</html>
