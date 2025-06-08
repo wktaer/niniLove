@@ -34,7 +34,6 @@ const specialNotes = {
   28: { "phrase": "Mi amor por ti no tiene pausa ni punto final, mi chiquita uwu", "img": "https://media.tenor.com/ZUmTKQanA2UAAAAd/pucca.gif" },
   29: { "phrase": "Tu existencia le dio sentido a todo en mí ♡ eres mi todo", "img": "https://media.tenor.com/ZUmTKQanA2UAAAAd/pucca.gif" },
   30: { "phrase": "Si el amor tuviera nombre, llevaría el tuyo, mi ternurita hermosa >///<", "img": "https://media.tenor.com/ZUmTKQanA2UAAAAd/pucca.gif" },
-  31: { "phrase": "Solo tú puedes hacer que mi corazón baile de alegría con un mensajito n.n", "img": "https://media.tenor.com/ZUmTKQanA2UAAAAd/pucca.gif" }
 }
 
           
